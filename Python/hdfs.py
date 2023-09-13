@@ -1,5 +1,8 @@
 from hdfs import InsecureClient
 
+
+
+
 hadoop_address = 'http://172.22.0.6:9870/'
 client = InsecureClient(hadoop_address, user='root')
 file = 'texte.txt'
