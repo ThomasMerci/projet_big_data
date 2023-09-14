@@ -1,8 +1,0 @@
-version: '3'
-services:
-
-  Nom:
-    build:
-      context: ./hadoop/docker-hadoop-master
-      dockerfile: docker-compose.yml
-    ports:

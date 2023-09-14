@@ -17,8 +17,20 @@ Apache Ranger : docker pull apache/ranger:2.4.0
 Hadoop : https://github.com/ThomasMerci/docker-hadoop
 
 
-# lancement
+# lancement 
 
-docker build -t projet_big_data .
+docker network create projet_big_data_network
+
+[aller dans hadoop pour lancer docker-compose]
+
+[racine]
+docker-compose build
+
+docker-compose up
 
 docker run projet_big_data
+docker run --name nifi -p 8444:8444 -d apache/nifi:latest
+
+
+# lancement 
+
