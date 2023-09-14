@@ -17,4 +17,8 @@ Apache Ranger : docker pull apache/ranger:2.4.0
 Hadoop : https://github.com/ThomasMerci/docker-hadoop
 
 
+# lancement
 
+docker build -t projet_big_data .
+
+docker run projet_big_data

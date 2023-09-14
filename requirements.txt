@@ -1,3 +1,2 @@
-
 hdfs
-pyspark.sql 
+pyspark

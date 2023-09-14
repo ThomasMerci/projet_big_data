@@ -1,25 +1,8 @@
 version: '3'
 services:
 
-
   Nom:
     build:
-      context: .
-      dockerfile:
+      context: ./hadoop/docker-hadoop-master
+      dockerfile: docker-compose.yml
     ports:
-
-    networks:
-
-    depends_on:
-      - Nom2
-
-  Nom2:
-    build:
-      context: .
-      dockerfile:
-    ports:
-
-    networks:
-
-    depends_on:
-      
