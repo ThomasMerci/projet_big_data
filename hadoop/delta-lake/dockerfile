@@ -1,0 +1,2 @@
+FROM deltaio/delta-docker:0.8.1_2.3.0
+
