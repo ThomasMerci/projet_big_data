@@ -1,7 +1,8 @@
 # projet_big_data
 
 
-![Alt text](diag.png)
+![Alt text](diagr.png)
+
 ![Alt text](image.png)
 
 docker tags:
