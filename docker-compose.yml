@@ -1,0 +1,12 @@
+version: '3'
+services:
+  projet_big_data:
+    build: .
+    image: projet_big_data:latest
+    container_name: projet_big_data_python
+    networks:
+      - projet_big_data_network
+
+networks:
+  projet_big_data_network:
+    external: true
