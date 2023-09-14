@@ -88,10 +88,31 @@ services:
     env_file:
       - ./ranger.env  
 
+  nifi:
+    image: apache/nifi:latest
+    container_name: nifi
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - nifi_data:/opt/nifi/nifi-current/conf
+    env_file:
+      - ./nifi.env
+    depends_on:
+      - namenode
+      - datanode
+      - resourcemanager
+      - nodemanager1
+      - historyserver
+      - prometheus
+      - grafana
+      - ranger
+
 volumes:
   hadoop_namenode:
   hadoop_datanode:
   hadoop_historyserver:
   prometheus_data:
   grafana_data:
+  nifi_data:
 
