@@ -1,5 +1,6 @@
 # lancement
-  
+
+
 sudo docker-compose up -d
 
 Namenode: http://<IP_address>:9870/

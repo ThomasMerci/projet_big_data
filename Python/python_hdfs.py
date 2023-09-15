@@ -1,4 +1,5 @@
 from hdfs import InsecureClient
+from pyspark.sql import SparkSession
 from pyspark import *
 from delta import *
 
@@ -17,12 +18,9 @@ with open(fichier, 'r') as f:
     read = f.read()
     print(read)
 
-  
 spark = SparkSession.builder.getOrCreate()
 df = spark.read.csv(fichier)
 df.selectExpr("split(_c0, ' ') as texte").show(4,False)
-
-
 
 builder = pyspark.sql.SparkSession.builder.appName("MyApp") \
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
