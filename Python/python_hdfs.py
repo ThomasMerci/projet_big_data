@@ -1,6 +1,5 @@
 from hdfs import InsecureClient
-from pyspark.sql import SparkSession
-import pyspark
+from pyspark import *
 from delta import *
 
 hadoop_address = 'http://172.24.0.6:9870/'
