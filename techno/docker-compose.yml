@@ -1,0 +1,68 @@
+version: "3"
+
+services:
+  prometheus:
+    image: bitnami/prometheus:2.47.0
+    container_name: prometheus
+    restart: always
+    ports:
+      - 9090:9090
+    #env_file:
+    #  - ./prometheus.env
+    volumes:
+      - prometheus_data:/bitnami/prometheus
+    networks:
+      - projet_big_data_network
+
+  grafana:
+    image: grafana/grafana:9.4.14
+    container_name: grafana
+    restart: always
+    ports:
+      - 3000:3000
+    #env_file:
+    #  - ./grafana.env
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - projet_big_data_network
+
+  ranger:
+    image: apache/ranger:2.4.0
+    container_name: ranger
+    restart: always
+    ports:
+      - 6080:6080
+    volumes:
+      - ./data/ranger:/opt/ranger/data
+    #env_file:
+    #  - ./ranger.env
+    networks:
+      - projet_big_data_network
+
+  nifi:
+    image: apache/nifi:latest
+    container_name: nifi
+    restart: always
+    ports:
+      - 8180:8080
+    volumes:
+      - nifi_data:/opt/nifi/nifi-current/conf
+    #env_file:
+    #  - ./nifi.env
+    depends_on:
+      - prometheus
+      - grafana
+      - ranger
+    networks:
+      - projet_big_data_network
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  nifi_data:
+
+networks:
+  projet_big_data_network:
+    external: true
+

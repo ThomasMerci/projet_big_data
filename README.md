@@ -21,16 +21,15 @@ Hadoop : https://github.com/ThomasMerci/docker-hadoop
 
 docker network create projet_big_data_network
 
-[aller dans hadoop pour lancer docker-compose]
+*[aller dans le dossier hadoop puis docker_hadoop_master]*
+docker-compose up
 
-[racine]
+*[aller dans le dossier techno]*
+docker-compose up
+
+*[dossier racine]*
 docker-compose build
 
 docker-compose up
 
-docker run projet_big_data
-docker run --name nifi -p 8444:8444 -d apache/nifi:latest
-
-
-# lancement 
 

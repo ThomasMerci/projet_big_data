@@ -6,30 +6,30 @@ services:
     container_name: namenode
     restart: always
     ports:
-      - 9870:9870
-      - 9000:9000
+    - 9870:9870
+    - 9000:9000
     volumes:
-      - hadoop_namenode:/hadoop/dfs/name
+    - hadoop_namenode:/hadoop/dfs/name
     environment:
-      - CLUSTER_NAME=test
+    - CLUSTER_NAME=test
     env_file:
-      - ./hadoop.env
+    - ./hadoop.env
     networks:
-      - projet_big_data_network
+    - projet_big_data_network
 
   datanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
     container_name: datanode
     restart: always
     volumes:
-      - hadoop_datanode:/hadoop/dfs/data
+    - hadoop_datanode:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
-      - ./hadoop.env
+    - ./hadoop.env
     networks:
-      - projet_big_data_network
-  
+    - projet_big_data_network
+
   resourcemanager:
     image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
     container_name: resourcemanager
@@ -37,9 +37,9 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
     env_file:
-      - ./hadoop.env
+    - ./hadoop.env
     networks:
-      - projet_big_data_network
+    - projet_big_data_network
 
   nodemanager1:
     image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
@@ -48,10 +48,10 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
     env_file:
-      - ./hadoop.env
+    - ./hadoop.env
     networks:
-      - projet_big_data_network
-  
+    - projet_big_data_network
+
   historyserver:
     image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
     container_name: historyserver
@@ -59,65 +59,11 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
     volumes:
-      - hadoop_historyserver:/hadoop/yarn/timeline
+    - hadoop_historyserver:/hadoop/yarn/timeline
     env_file:
-      - ./hadoop.env
+    - ./hadoop.env
     networks:
-      - projet_big_data_network
-  
-
-  prometheus:
-    image: bitnami/prometheus:2.47.0
-    container_name: prometheus
-    restart: always
-    ports:
-      - 9090:9090
-    volumes:
-      - prometheus_data:/bitnami/prometheus
-    env_file:
-      - ./prometheus.env
-
-  grafana:
-    image: grafana/grafana:9.4.14
-    container_name: grafana
-    restart: always
-    ports:
-      - 3000:3000
-    volumes:
-      - grafana_data:/var/lib/grafana
-    env_file:
-      - ./grafana.env
-
-  ranger:
-    image: apache/ranger:2.4.1
-    container_name: ranger
-    restart: always
-    ports:
-      - 6080:6080  
-    volumes:
-      - ./data/ranger:/opt/ranger/data  
-    env_file:
-      - ./ranger.env  
-
-  nifi:
-    image: apache/nifi:latest
-    container_name: nifi
-    restart: always
-    ports:
-      - 8080:8080
-    volumes:
-      - nifi_data:/opt/nifi/nifi-current/conf
-    env_file:
-      - ./nifi.env
-    depends_on:
-      - namenode
-      - datanode
-      - resourcemanager
-      - nodemanager1
-      - historyserver
-      - prometheus
-      - grafana
-      - ranger
+    - projet_big_data_network
 
 volumes:
   hadoop_namenode:
@@ -127,7 +73,4 @@ volumes:
 networks:
   projet_big_data_network:
     external: true
-  prometheus_data:
-  grafana_data:
-  nifi_data:
 

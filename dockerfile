@@ -9,6 +9,7 @@ COPY requirements.txt ./
 COPY /Python/python_hdfs.py ./python_hdfs.py
 COPY /Python/texte.txt ./
 
+RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 CMD ["python", "python_hdfs.py"]

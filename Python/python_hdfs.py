@@ -1,25 +1,33 @@
 from hdfs import InsecureClient
 from pyspark.sql import SparkSession
-from pyspark import *
 from delta import *
 
 hadoop_address = 'http://172.24.0.6:9870/'
 client = InsecureClient(hadoop_address, user='root')
 fichier = 'texte.txt'
 client.makedirs('/projet')
-hdfs_path = '/projet/' + fichier
-client.download(hdfs_path, fichier, overwrite=True)
+hdfs = '/projet/' + fichier
+client.download(hdfs, fichier, overwrite=True)
 print('ok')
 
-
+"""
 #client.download(hdfs_path, fichier)
 with open(fichier, 'r') as f:
     print("Contenu :")
     read = f.read()
     print(read)
 
-spark = SparkSession.builder.getOrCreate()
-df = spark.read.csv(fichier)
+spark = SparkSession.builder .appName("deltalake") .getOrCreate()
+hdfs = 'hdfs://172.24.0.6:9000/projet/texte.txt'
+df = spark.read.csv(hdfs, header=True, inferSchema=True)
+print('ok spark')
+
+delta = 'hdfs://172.24.0.6:9000/projet/delta_table'
+df.write.format("delta").mode("overwrite").save(delta)
+spark.stop()
+print('ok delta')
+"""
+"""
 df.selectExpr("split(_c0, ' ') as texte").show(4,False)
 
 builder = pyspark.sql.SparkSession.builder.appName("MyApp") \
@@ -38,3 +46,4 @@ df.show()
 # écrire
 data = spark.range(5, 10)
 data.write.format("delta").mode("overwrite").save("/tmp/delta-table")
+"""
