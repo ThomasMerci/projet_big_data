@@ -19,7 +19,6 @@ else:
 client.makedirs('/projet')
 fichier_hdfs = '/projet/' + fichier_local.split('/')[-1]
 client.upload(fichier_hdfs,fichier_local, overwrite=True)
-print('ok')
 
 #lecture
 with open(fichier_local, 'r') as f:
@@ -27,23 +26,39 @@ with open(fichier_local, 'r') as f:
     read = f.read()
     print(read)
 
+print('debutspark')
+
 #spark
+
 spark = SparkSession.builder.appName("deltalake").getOrCreate()
+"""
+spark = SparkSession .builder .appName("deltalake") \
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
+    .getOrCreate()
+"""
 spark.sparkContext.setLogLevel("INFO")
+print(spark.sparkContext._conf.getAll())
 
-hdfs_path = f'hdfs://namenode:9870{fichier_hdfs}'
-df = spark.read.option("delimiter", ";").csv(hdfs_path, header=True, inferSchema=True)
-print('ok spark')
+df = spark.read.csv("hdfs://namenode:9000/projet/texte.csv", header=True, sep=";")
+df.show()
 
-#deltalake
-delta_path = 'hdfs://namenode:9870/projet/delta_table'
-df.write.format("delta").mode("overwrite").save(delta_path)
 
-spark.stop()
-print('ok delta')
+
+
 
 
 """
+#deltalake
+df_delta = 'hdfs://namenode:9000/projet/delta_table'
+df.write.format("delta").mode("overwrite").save(df_delta)
+df_verif = spark.read.format("delta").load(df_delta)
+df_verif.show()
+
+spark.stop()
+print('OK Delta')
+
+
 df.selectExpr("split(_c0, ' ') as texte").show(4,False)
 
 builder = pyspark.sql.SparkSession.builder.appName("MyApp") \

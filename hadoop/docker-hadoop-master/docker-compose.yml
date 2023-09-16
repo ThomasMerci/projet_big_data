@@ -12,6 +12,7 @@ services:
     - hadoop_namenode:/hadoop/dfs/name
     environment:
     - CLUSTER_NAME=test
+    - HDFS_CONF_ipc_maximum_data_length=67108864
     env_file:
     - ./hadoop.env
     networks:
