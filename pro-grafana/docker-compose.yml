@@ -40,27 +40,9 @@ services:
     networks:
       - projet_big_data_network
 
-  nifi:
-    image: apache/nifi:latest
-    container_name: nifi
-    restart: always
-    ports:
-      - 8180:8080
-    volumes:
-      - nifi_data:/opt/nifi/nifi-current/conf
-    #env_file:
-    #  - ./nifi.env
-    depends_on:
-      - prometheus
-      - grafana
-      - ranger
-    networks:
-      - projet_big_data_network
-
 volumes:
   prometheus_data:
   grafana_data:
-  nifi_data:
 
 networks:
   projet_big_data_network:
