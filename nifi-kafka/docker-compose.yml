@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - projet_big_data_network
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    networks:
+      - projet_big_data_network
+    
+  nifi:
+    image: apache/nifi:latest
+    container_name: nifi
+    restart: always
+    ports:
+      - 8180:8080
+    volumes:
+      - nifi_data:/opt/nifi/nifi-current/conf
+    #env_file:
+    #  - ./nifi.env
+    depends_on:
+      - prometheus
+      - grafana
+      - ranger
+    networks:
+      - projet_big_data_network
+
+volumes:
+  nifi_data:
+
+networks:
+  projet_big_data_network:
+    external: true
+
