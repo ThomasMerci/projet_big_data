@@ -1,3 +1,0 @@
-tech,oui
-hadoop,oui
-kafka,oui

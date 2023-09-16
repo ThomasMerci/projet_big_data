@@ -1,32 +1,48 @@
+import os
 from hdfs import InsecureClient
 from pyspark.sql import SparkSession
 from delta import *
 
-hadoop_address = 'http://172.24.0.6:9870/'
+hadoop_address = 'http://namenode:9870/' #namenode
 client = InsecureClient(hadoop_address, user='root')
-fichier = 'texte.txt'
+print(hadoop_address)
+
+#vérification des fichiers
+fichier_local = './texte.csv'
+if os.path.exists(fichier_local):
+    print(f"Le fichier {fichier_local} existe.")
+else:
+    print(f"Le fichier {fichier_local} n'existe pas")
+    exit(1)
+
+#vers hdfs
 client.makedirs('/projet')
-hdfs = '/projet/' + fichier
-client.download(hdfs, fichier, overwrite=True)
+fichier_hdfs = '/projet/' + fichier_local.split('/')[-1]
+client.upload(fichier_hdfs,fichier_local, overwrite=True)
 print('ok')
 
-"""
-#client.download(hdfs_path, fichier)
-with open(fichier, 'r') as f:
+#lecture
+with open(fichier_local, 'r') as f:
     print("Contenu :")
     read = f.read()
     print(read)
 
-spark = SparkSession.builder .appName("deltalake") .getOrCreate()
-hdfs = 'hdfs://172.24.0.6:9000/projet/texte.txt'
-df = spark.read.csv(hdfs, header=True, inferSchema=True)
+#spark
+spark = SparkSession.builder.appName("deltalake").getOrCreate()
+spark.sparkContext.setLogLevel("INFO")
+
+hdfs_path = f'hdfs://namenode:9870{fichier_hdfs}'
+df = spark.read.option("delimiter", ";").csv(hdfs_path, header=True, inferSchema=True)
 print('ok spark')
 
-delta = 'hdfs://172.24.0.6:9000/projet/delta_table'
-df.write.format("delta").mode("overwrite").save(delta)
+#deltalake
+delta_path = 'hdfs://namenode:9870/projet/delta_table'
+df.write.format("delta").mode("overwrite").save(delta_path)
+
 spark.stop()
 print('ok delta')
-"""
+
+
 """
 df.selectExpr("split(_c0, ' ') as texte").show(4,False)
 
