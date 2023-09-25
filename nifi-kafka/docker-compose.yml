@@ -29,10 +29,7 @@ services:
       - nifi_data:/opt/nifi/nifi-current/conf
     #env_file:
     #  - ./nifi.env
-    depends_on:
-      - prometheus
-      - grafana
-      - ranger
+    #depends_on:
     networks:
       - projet_big_data_network
 
