@@ -6,8 +6,6 @@ services:
     container_name: zookeeper
     ports:
       - "2181:2181"
-    networks:
-      - projet_big_data_network
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
@@ -16,25 +14,27 @@ services:
     environment:
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-    networks:
-      - projet_big_data_network
     
   nifi:
-    image: apache/nifi:latest
+    cap_add:
+      - NET_ADMIN
+    image: apache/nifi
     container_name: nifi
-    restart: always
+    environment:
+       SINGLE_USER_CREDENTIALS_USERNAME: 'admin'
+       SINGLE_USER_CREDENTIALS_PASSWORD: 'ctsBtRBKHRAx69EqUghvvgEvjnaLjFEB'
     ports:
-      - 8180:8080
+      - "8080:8080/tcp" # HTTP interface
+      - "8443:8443/tcp" # HTTPS interface
+      - "514:514/tcp" # Syslog
+      - "2055:2055/udp" # NetFlow
     volumes:
-      - nifi_data:/opt/nifi/nifi-current/conf
-    #env_file:
-    #  - ./nifi.env
-    #depends_on:
-    networks:
-      - projet_big_data_network
+      - nifi-conf:/opt/nifi/nifi-current/conf
+    restart: unless-stopped
 
 volumes:
   nifi_data:
+  nifi-conf:
 
 networks:
   projet_big_data_network:
