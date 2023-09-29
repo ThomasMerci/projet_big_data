@@ -1,5 +1,7 @@
 Commande docker :
 
+sudo docker-compose build (pour build le Dockerfile.delta_lake)
+
 sudo docker-compose up -d
 
 Les différents interface web : 
