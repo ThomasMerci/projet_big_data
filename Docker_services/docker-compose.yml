@@ -1,0 +1,188 @@
+version: "3.8"
+
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    restart: always
+    ports:
+      - 9870:9870
+      - 9010:9000
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+    environment:
+      CLUSTER_NAME: "training"
+      CORE_CONF_fs_defaultFS: "hdfs://namenode:9000"
+    env_file:
+      - ./hadoop.env
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    restart: always
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+      CORE_CONF_fs_defaultFS: "hdfs://namenode:9000"
+    ports:
+      - 9864:9864
+    env_file:
+      - ./hadoop.env
+
+  resourcemanager:
+    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+    container_name: resourcemanager
+    restart: always
+    environment:
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
+    ports:
+      - 8088:8088
+    env_file:
+      - ./hadoop.env
+
+  nodemanager1:
+    image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+    container_name: nodemanager
+    restart: always
+    environment:
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+    env_file:
+      - ./hadoop.env
+
+  historyserver:
+    image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+    container_name: historyserver
+    restart: always
+    environment:
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+    volumes:
+      - hadoop_historyserver:/hadoop/yarn/timeline
+    env_file:
+      - ./hadoop.env
+
+  hive-server:
+    image: bde2020/hive:2.3.2-postgresql-metastore
+    container_name: hive-server
+    depends_on:
+      - namenode
+      - datanode
+    env_file:
+      - ./hadoop-hive.env
+    environment:
+      HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
+      SERVICE_PRECONDITION: "hive-metastore:9083"
+    ports:
+      - 10000:10000
+      - 10002:10002
+
+  hive-metastore:
+    image: bde2020/hive:2.3.2-postgresql-metastore
+    container_name: hive-metastore
+    env_file:
+      - ./hadoop-hive.env
+    command: /opt/hive/bin/hive --service metastore
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 hive-metastore-postgresql:5432"
+    ports:
+      - 9083:9083
+
+  hive-metastore-postgresql:
+    image: bde2020/hive-metastore-postgresql:2.3.0
+    container_name: hive-metastore-postgresql
+
+  hbase:
+    image: bde2020/hbase-standalone:1.0.0-hbase1.2.6
+    container_name: hbase
+    volumes:
+      - hbase_data:/hbase-data
+      - hbase_zookeeper_data:/zookeeper-data
+    ports:
+      - 16000:16000
+      - 16010:16010
+      - 16020:16020
+      - 16030:16030
+      - 2888:2888
+      - 3888:3888
+      - 2181:2181
+    environment:
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+    env_file:
+      - ./hbase-standalone.env
+
+  delta-lake:
+    image: deltaio/delta-docker  
+    container_name: delta-lake
+    # Configuration pour Delta Lake
+    volumes:
+      - delta-lake-data:/data  # Chemin local vers les données Delta Lake
+    depends_on:
+      - namenode  # Delta Lake dépend du service namenode (HDFS) pour le stockage
+    ports :
+      - 8888:8888
+      
+  prometheus:
+    image: bitnami/prometheus:2.47.0
+    container_name: prometheus
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - prometheus_data:/bitnami/prometheus
+    env_file:
+      - ./prometheus.env
+  
+  grafana:
+    image: grafana/grafana:9.4.14
+    container_name: grafana
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+    env_file:
+      - ./grafana.env
+  
+  nifi:
+    image: apache/nifi:latest
+    container_name: nifi
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - nifi_data:/opt/nifi/nifi-current/conf
+    env_file:
+      - ./nifi.env
+    depends_on:
+      - namenode
+      - datanode
+      - resourcemanager
+      - nodemanager1
+      - historyserver
+      - hive-server
+      - hive-metastore
+      - hive-metastore-postgresql
+      - hbase
+      - delta-lake
+      - prometheus
+      - grafana
+
+volumes:
+  hadoop_namenode:
+    name: hadoop_namenode
+  hadoop_datanode:
+    name: hadoop_datanode
+  hadoop_historyserver:
+    name: hadoop_historyserver
+  hbase_data:
+    name: hbase_data
+  hbase_zookeeper_data:
+    name: hbase_zookeeper_data
+  delta-lake-data:
+    name: delta-lake-data 
+  prometheus_data:
+    name: prometheus_data
+  grafana_data:
+    name: grafana_data
+  nifi_data: 
+    name: nifi_data
