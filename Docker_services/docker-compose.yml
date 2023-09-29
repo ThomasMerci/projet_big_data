@@ -145,6 +145,13 @@ services:
       - grafana_data:/var/lib/grafana
     env_file:
       - ./grafana.env
+      
+  spark:
+    image: apache/spark:3.5.0-python3
+    container_name: spark_shell
+    tty: true
+    stdin_open: true
+    command: /bin/bash 
   
   nifi:
     image: apache/nifi:latest
@@ -169,6 +176,9 @@ services:
       - delta-lake
       - prometheus
       - grafana
+      - spark
+  
+
 
 volumes:
   hadoop_namenode:

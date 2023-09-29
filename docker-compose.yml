@@ -6,7 +6,9 @@ services:
     container_name: projet_big_data_python
     networks:
       - projet_big_data_network
-
+    environment:
+      - DELTA_VERSION=0.9.0 
+    command: spark-submit --packages io.delta:delta-core:${DELTA_VERSION} python_deltalake.py
 
 networks:
   projet_big_data_network:
