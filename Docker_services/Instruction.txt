@@ -16,7 +16,99 @@ Accéder au container namenode pour faire les commande hadoop hdfs :
 sudo docker exec -it namenode bash
 
 Accéder au container delta-lake : 
-sudo docker exec -it delta-lake /bin/bash
+sudo docker exec -it delta-lake bash
+
+Dans le container delta-lake suite à la commande précédente, on peut utiliser : 
+Python: 
+taper "python3" 
+exemple de code pour créer une table : 
+import pandas as pd
+from deltalake.writer import write_deltalake
+from deltalake import DeltaTable
+
+# Create a Pandas DataFrame
+df = pd.DataFrame({"data": range(5)})
+
+# Write to the Delta Lake table
+write_deltalake("/tmp/deltars_table", df)
+
+# Append new data
+df = pd.DataFrame({"data": range(6, 11)})
+write_deltalake("/tmp/deltars_table", df, mode="append")
+
+# Read the Delta Lake table
+dt = DeltaTable("/tmp/deltars_table")
+
+# Show the Delta Lake table
+dt.to_pandas()
+# List files for the Delta Lake table
+dt.files()
+
+Des fichiers parquet ont été créer
+
+Pyspark : 
+si on est encore dans l'environnement python3 suite à l'exemple précédente faire : exit()
+taper la commande suivante pour maintenant accéder à Pyspark :
+
+$SPARK_HOME/bin/pyspark --packages io.delta:${DELTA_PACKAGE_VERSION} \
+--conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
+--conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
+
+Exemple de code en spark : 
+
+# Create a Spark DataFrame
+data = spark.range(0, 5)
+
+# Write to a Delta Lake table
+(data
+   .write
+   .format("delta")
+   .save("/tmp/delta-table")
+)
+
+# Read from the Delta Lake table
+df = (spark
+        .read
+        .format("delta")
+        .load("/tmp/delta-table")
+        .orderBy("id")
+      )
+
+# Show the Delta Lake table
+df.show()
+
+Pareil des fichiers parquet ont été créer, voici la commande pour voir où : ls -lsgA /tmp/delta-table
+
+Scala : 
+Pareil, si on est encore dans l'environnement Pyspark suite à l'exemple précédente faire : exit()
+Taper la commande suivante pour accéder à Scala : 
+
+$SPARK_HOME/bin/spark-shell --packages io.delta:${DELTA_PACKAGE_VERSION} \
+--conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
+--conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
+
+Exemple de code en Scala : 
+
+// Create a Spark DataFrame
+val data = spark.range(0, 5)
+
+// Write to a Delta Lake table
+(data
+   .write
+   .format("delta")
+   .save("/tmp/delta-table")
+)
+
+// Read from the Delta Lake table
+val df = (spark
+            .read
+            .format("delta")
+            .load("/tmp/delta-table")
+            .orderBy("id")
+         )
+
+// Show the Delta Lake table
+df.show()
 
 Prometheus : 
 http://localhost:9090/
