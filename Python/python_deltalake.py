@@ -14,28 +14,18 @@ df = spark.read.format("delta").load("/tmp/data_table")
 df.show()
 
 # csv
-schema = StructType([
-    StructField("id", IntegerType(), True),       # Changez IntegerType() en StringType() si l'ID est une chaîne de caractères
+schema = StructType([StructField("id", IntegerType(), True), 
     StructField("model", StringType(), True),
     StructField("category1", StringType(), True),
     StructField("category2", StringType(), True),
     StructField("frame", StringType(), True),
-    StructField("price", DoubleType(), True)      # Changez DoubleType() en StringType() si le prix est une chaîne de caractères
-])
-
-# Chargez les données depuis le fichier CSV avec le schéma explicite
+    StructField("price", DoubleType(), True) ])
 data_csv = "./texte.csv"
 csv_data = spark.read.option("header", "true").option("delimiter", ";").schema(schema).csv(data_csv)
-
-# Appliquez na.drop() au DataFrame
 csv_data = csv_data.na.drop()
-
-# Affichez les 10 premières lignes
 csv_data.show(10)
 
-# Enregistrez le DataFrame nettoyé au format Delta
+# delta
 csv_data.write.format("delta").mode("overwrite").save("/tmp/csv_table")
-
-# Chargez le DataFrame nettoyé depuis Delta
 df_csv = spark.read.format("delta").load("/tmp/csv_table")
 df_csv.show(10)

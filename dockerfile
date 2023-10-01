@@ -17,6 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY /Python/python_deltalake.py ./python_deltalake.py
 COPY /Python/texte.csv ./texte.csv
+COPY /data ./data
 
 CMD ["/opt/spark/bin/spark-submit", "/big_data/python_deltalake.py"]
 
