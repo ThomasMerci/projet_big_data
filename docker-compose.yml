@@ -7,8 +7,8 @@ services:
     networks:
       - projet_big_data_network
     environment:
-      - DELTA_VERSION=0.9.0 
-    command: spark-submit --packages io.delta:delta-core:${DELTA_VERSION} python_deltalake.py
+      - DELTA_VERSION="2.12:2.4.0"
+    command: spark-submit --packages io.delta:delta-core_2.12:2.4.0 python_deltalake.py
 
 networks:
   projet_big_data_network:

@@ -147,7 +147,7 @@ services:
       - ./grafana.env
       
   spark:
-    image: apache/spark:3.5.0-python3
+    image: apache/spark:3.4.1-python3
     container_name: spark_shell
     tty: true
     stdin_open: true
