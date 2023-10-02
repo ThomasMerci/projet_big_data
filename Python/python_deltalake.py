@@ -29,3 +29,4 @@ csv_data.show(10)
 csv_data.write.format("delta").mode("overwrite").save("/tmp/csv_table")
 df_csv = spark.read.format("delta").load("/tmp/csv_table")
 df_csv.show(10)
+

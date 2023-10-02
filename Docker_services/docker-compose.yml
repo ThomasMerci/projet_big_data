@@ -104,7 +104,7 @@ services:
       - 16030:16030
       - 2888:2888
       - 3888:3888
-      - 2181:2181
+      - 2191:2191
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
     env_file:
@@ -178,7 +178,19 @@ services:
       - grafana
       - spark
   
-
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
 
 volumes:
   hadoop_namenode:
@@ -199,3 +211,8 @@ volumes:
     name: grafana_data
   nifi_data: 
     name: nifi_data
+
+
+networks:
+  projet_big_data_network:
+    external: true
