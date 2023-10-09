@@ -20,5 +20,3 @@ COPY /Python/texte.csv ./texte.csv
 COPY /data ./projet_big_data_volume/
 
 CMD ["/opt/spark/bin/spark-submit", "/big_data/python_deltalake.py"]
-
- 

@@ -13,5 +13,3 @@ services:
 networks:
   projet_big_data_network:
     external: true
-volume:
-   projet_big_data_volume:
