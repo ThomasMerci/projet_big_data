@@ -9,6 +9,8 @@ from delta import *
 import pyarrow.hdfs as hdfs
 import pandas as pd
 #import python_extract
+#import DataAnalysis
+#import data_processing
 
 
 #hdfs
@@ -52,7 +54,6 @@ client.upload(fichier_hdfs,bikeshops, overwrite=True)
 
 
 
-###
 
 #hdfs
 hadoop_address = 'http://namenode:9870/'
@@ -63,6 +64,10 @@ df_orders_csv = './projet/orders.csv'
 df_bikes_csv = './projet/bikes.csv'
 df_bikeshops_csv = './projet/bikeshops.csv'
 
+
+#script python
+#DataAnalysis.analyze_and_clean_data()
+#data_processing.processing_and_save_data(df_orders_csv, df_bikes_csv, df_bikeshops_csv)
 
 #join, data pour le ML
 #df_ml, data_bikes = python_extract.extract(df_orders_csv, df_bikes_csv, df_bikeshops_csv)
