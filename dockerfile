@@ -15,8 +15,11 @@ RUN python3.9 -m pip install --upgrade pip
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY /Python/python_deltalake.py ./python_deltalake.py
-COPY /Python/texte.csv ./texte.csv
-COPY /data ./projet_big_data_volume/
+#csv
+COPY Python/texte.csv ./texte.csv
+COPY data/bikes.csv ./bikes.csv
+COPY data/bikeshops.csv ./bikeshops.csv
+COPY data/orders.csv ./orders.csv
 
+COPY /Python/python_deltalake.py ./python_deltalake.py
 CMD ["/opt/spark/bin/spark-submit", "/big_data/python_deltalake.py"]
