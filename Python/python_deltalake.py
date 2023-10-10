@@ -14,7 +14,7 @@ import pandas as pd
 #import data_processing
 
 
-#hdfs
+#mise en place des fihciers dans hdfs 
 hadoop_address = 'http://namenode:9870/' #namenode
 client = InsecureClient(hadoop_address, user='root')
 client.makedirs('/projet')
@@ -77,8 +77,9 @@ with client.read(df_bikeshops_csv, encoding='utf-8') as hdfs_file:
 
 #join, data pour le ML
 #df_ml, data_bikes = python_extract.extract(df_orders_csv, df_bikes_csv, df_bikeshops_csv)
-
-
+#print("lecture")
+#df_ml.show()
+#data_bikes.show()
 
 
 #spark
@@ -106,19 +107,11 @@ csv_data = csv_data.na.drop()
 csv_data.show(10)
 
 
-
-
-
-
-
 # delta lecture
 csv_data.write.format("delta").mode("overwrite").save("/tmp/csv_table")
 df_csv = spark.read.format("delta").load("/tmp/csv_table")
 df_csv.show(10)
 
-#print("lecture")
-#df_ml.show()
-#data_bikes.show()
 
 # hdfs lecture
 fichier_hdfs = '/projet/bikes.csv'

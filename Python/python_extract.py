@@ -3,6 +3,12 @@ from pyspark.sql.types import DoubleType, FloatType, IntegerType
 from pyspark.sql import DataFrame, functions as Funct
 
 def extract(df_orders_csv, df_bikes_csv, df_bikeshops_csv):
+
+    spark = (SparkSession
+            .builder
+            .appName("data")
+            .enableHiveSupport()
+            .getOrCreate())
     #extract
     fichier = df_orders_csv
     infer_schema = "false"
@@ -69,7 +75,7 @@ def extract(df_orders_csv, df_bikes_csv, df_bikeshops_csv):
     df_ML = df_ML.withColumn("nb_jour", datediff(df_ML["order_date"], lit(min_date)))
     df_ML = df_ML.fillna(0, subset=["jour"])
 
-    def return df_ML, df
+    return df_ML, df
 
 
 
