@@ -8,9 +8,9 @@ from pyspark.sql import SparkSession
 from delta import *
 import pyarrow.hdfs as hdfs
 import pandas as pd
-#import python_extract
+import python_extract
 #import python_ml
-#import DataAnalysis
+#import data_analysis
 #import data_processing
 
 
@@ -77,12 +77,12 @@ with client.read(df_bikeshops_csv, encoding='utf-8') as hdfs_file:
 #data_processing.processing_and_save_data(df_orders_csv, df_bikes_csv, df_bikeshops_csv)
 
 #join, data pour le ML
-#df_ml, data_bikes = python_extract.extract(df_orders_csv, df_bikes_csv, df_bikeshops_csv)
-#print("lecture")
+df_ml, data_bikes = python_extract.extract(df_orders_csv, df_bikes_csv, df_bikeshops_csv)
+print("lecture")
 #df_ml.show()
 #data_bikes.show()
 
-
+"""
 #spark
 builder = pyspark.sql.SparkSession.builder.appName("deltalake") \
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
@@ -112,7 +112,7 @@ csv_data.show(10)
 csv_data.write.format("delta").mode("overwrite").save("/tmp/csv_table")
 df_csv = spark.read.format("delta").load("/tmp/csv_table")
 df_csv.show(10)
-
+"""
 
 # hdfs lecture
 fichier_hdfs = '/projet/bikes.csv'

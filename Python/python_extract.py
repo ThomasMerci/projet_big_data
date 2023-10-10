@@ -1,6 +1,8 @@
 from pyspark.sql.functions import dayofmonth, dayofweek, to_date, datediff, lit, date_add, coalesce, col
 from pyspark.sql.types import DoubleType, FloatType, IntegerType
 from pyspark.sql import DataFrame, functions as Funct
+import pyspark
+from pyspark.sql import SparkSession
 
 def extract(df_orders_csv, df_bikes_csv, df_bikeshops_csv):
 
