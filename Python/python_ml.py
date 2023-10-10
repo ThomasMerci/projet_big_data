@@ -5,9 +5,9 @@ from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml import Pipeline
 
-def rl_recette(df_1):
+def rl_recette(df_ml):
     col_ML = ["order_date", "nb_jour", "quantity", "jour", "jour_semaine", "price"]
-    df_ML = df_1.select(col_ML)
+    df_ML = df_ml.select(col_ML)
 
     df_ML = df_ML.groupBy("order_date").agg(Funct.sum("quantity").alias("total_quantity"),
         Funct.sum("price").alias("total_price"))

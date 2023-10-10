@@ -9,6 +9,7 @@ from delta import *
 import pyarrow.hdfs as hdfs
 import pandas as pd
 #import python_extract
+#import python_ml
 #import DataAnalysis
 #import data_processing
 
@@ -63,7 +64,12 @@ client = InsecureClient(hadoop_address, user='root')
 df_orders_csv = './projet/orders.csv'
 df_bikes_csv = './projet/bikes.csv'
 df_bikeshops_csv = './projet/bikeshops.csv'
-
+with client.read(df_orders_csv, encoding='utf-8') as hdfs_file:
+    df_orders_csv = pd.read_csv(hdfs_file)
+with client.read(df_bikes_csv, encoding='utf-8') as hdfs_file:
+    df_bikes_csv = pd.read_csv(hdfs_file)
+with client.read(df_bikeshops_csv, encoding='utf-8') as hdfs_file:
+    df_bikeshops_csv = pd.read_csv(hdfs_file)
 
 #script python
 #DataAnalysis.analyze_and_clean_data()
@@ -100,17 +106,27 @@ csv_data = csv_data.na.drop()
 csv_data.show(10)
 
 
+
+
+
+
+
 # delta lecture
 csv_data.write.format("delta").mode("overwrite").save("/tmp/csv_table")
 df_csv = spark.read.format("delta").load("/tmp/csv_table")
 df_csv.show(10)
 
-print("lecture")
+#print("lecture")
+#df_ml.show()
+#data_bikes.show()
 
 # hdfs lecture
 fichier_hdfs = '/projet/bikes.csv'
 with client.read(fichier_hdfs, encoding='utf-8') as hdfs_file:
     df = pd.read_csv(hdfs_file)
     print(df.head())
+    print(df.describe())
+
+
 
 print('fin')
