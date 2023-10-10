@@ -1,3 +1,5 @@
 hdfs
 pyspark
 delta-spark
+pyarrow
+pandas
