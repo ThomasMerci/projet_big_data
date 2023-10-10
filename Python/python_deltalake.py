@@ -61,9 +61,10 @@ hadoop_address = 'http://namenode:9870/'
 client = InsecureClient(hadoop_address, user='root')
 
 #csv
-df_orders_csv = './projet/orders.csv'
-df_bikes_csv = './projet/bikes.csv'
-df_bikeshops_csv = './projet/bikeshops.csv'
+df_orders_csv = '/projet/orders.csv'
+df_bikes_csv = '/projet/bikes.csv'
+df_bikeshops_csv = '/projet/bikeshops.csv'
+
 with client.read(df_orders_csv, encoding='utf-8') as hdfs_file:
     df_orders_csv = pd.read_csv(hdfs_file)
 with client.read(df_bikes_csv, encoding='utf-8') as hdfs_file:
