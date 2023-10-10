@@ -2,7 +2,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
 
-def processing_and_save_data():
+def processing_and_save_data(orders_csv, bikes_csv, bikeshops_csv):
     # Initialiser SparkSession
     spark = (SparkSession
              .builder
@@ -29,7 +29,7 @@ def processing_and_save_data():
                     .option("delimiter", ";")
                     .option("header", "true")
                     .schema(ordersSchema)
-                    .load("/home/zafifomendrahagabriello/Téléchargements/BigData/Python/Data/orders.csv"))
+                    .load(orders_csv))
 
         # Convertir "order_date" en date
         ordersDF = ordersDF.withColumn("order_date", to_date(ordersDF["order_date"], "M/d/yyyy"))
@@ -50,7 +50,7 @@ def processing_and_save_data():
                    .option("delimiter", ";")
                    .option("header", "true")
                    .schema(bikesSchema)
-                   .load("/home/zafifomendrahagabriello/Téléchargements/BigData/Python/Data/bikes.csv"))
+                   .load(bikes_csv))
 
         # Definir le schéma pour "bikeshops.csv"  et le lire dans un dataframe
         bikeshopSchema = StructType([
@@ -68,7 +68,7 @@ def processing_and_save_data():
                       .option("delimiter", ";")
                       .option("header", "true")
                       .schema(bikeshopSchema)
-                      .load("/home/zafifomendrahagabriello/Téléchargements/BigData/Python/Data/bikeshops.csv"))
+                      .load(bikeshops_csv))
 
         # Remplacer les virgules par des points dans les colonnes latitude et longitude et puis les convertir en DoubleType
         bikeshopDF = bikeshopDF.withColumn("latitude", regexp_replace("latitude", ",", ".").cast(DoubleType()))
@@ -82,5 +82,3 @@ def processing_and_save_data():
     finally:
         spark.stop()
 
-# Appel de la fonction
-processing_and_save_data()
