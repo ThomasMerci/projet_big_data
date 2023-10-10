@@ -61,7 +61,7 @@ client = InsecureClient(hadoop_address, user='root')
 #csv
 df_orders_csv = './projet/orders.csv'
 df_bikes_csv = './projet/bikes.csv'
-df_bikeshops_csv = './projet/bikesshops.csv'
+df_bikeshops_csv = './projet/bikeshops.csv'
 
 
 #join, data pour le ML
