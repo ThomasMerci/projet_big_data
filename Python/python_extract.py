@@ -1,9 +1,10 @@
+from pyspark.sql.functions import dayofmonth, dayofweek, to_date, datediff, lit, date_add, coalesce, col
+from pyspark.sql.types import DoubleType, FloatType, IntegerType
+from pyspark.sql import DataFrame, functions as Funct
 
-
-
-def extract():
+def extract(df_orders_csv, df_bikes_csv, df_bikeshops_csv):
     #extract
-    fichier = "/FileStore/tables/orders.csv"
+    fichier = df_orders_csv
     infer_schema = "false"
     first_row_is_header = "True"
     delimiter = ";"
@@ -26,7 +27,7 @@ def extract():
     df_orders = df_orders.fillna(0, subset=["jour"])
 
     #bikes.csv
-    fichier = "/FileStore/tables/bikes.csv"
+    fichier = df_bikes_csv
     infer_schema = "false"
     first_row_is_header = "True"
     delimiter = ";"
@@ -38,7 +39,7 @@ def extract():
     df_bikes = df_bikes.withColumnRenamed("bike.id", "bike")
 
     #bikeshop.csv
-    fichier = "/FileStore/tables/bikeshops.csv"
+    fichier = df_bikeshops_csv
     infer_schema = "false"
     first_row_is_header = "True"
     delimiter = ";"
@@ -57,10 +58,7 @@ def extract():
     df = df.withColumn("quantity", col("quantity").cast(DoubleType()))
     df = df.withColumn("price", col("price").cast(DoubleType()))
 
-    col_ML = ["order_date", "nb_jour", "quantity", "jour", "jour_semaine", "price"]
-    df_ML = df_1.select(col_ML)
-
-    df_ML = df_ML.groupBy("order_date").agg(
+    df_ML = df.groupBy("order_date").agg(
         Funct.sum("quantity").alias("total_quantity"),
         Funct.sum("price").alias("total_price"))
 
@@ -71,5 +69,7 @@ def extract():
     df_ML = df_ML.withColumn("nb_jour", datediff(df_ML["order_date"], lit(min_date)))
     df_ML = df_ML.fillna(0, subset=["jour"])
 
-    def return df_ML
+    def return df_ML, df
+
+
 
