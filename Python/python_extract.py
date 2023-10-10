@@ -4,23 +4,14 @@ from pyspark.sql import DataFrame, functions as Funct
 import pyspark
 from pyspark.sql import SparkSession
 
-def extract(df_orders_csv, df_bikes_csv, df_bikeshops_csv):
+def extract(df_orders, df_bikes, df_bikeshops):
 
-    spark = (SparkSession
-            .builder
-            .appName("data")
-            .enableHiveSupport()
-            .getOrCreate())
-    #extract
-    fichier = df_orders_csv
-    infer_schema = "false"
-    first_row_is_header = "True"
-    delimiter = ";"
+    spark = SparkSession.builder.appName("data").enableHiveSupport().getOrCreate()
+    df_orders = spark.createDataFrame(df_orders)
+    df_bikes = spark.createDataFrame(df_bikes)
+    df_bikeshops = spark.createDataFrame(df_bikeshops)
 
-    df_orders = spark.read.format("csv") .option("inferSchema", infer_schema) \
-    .option("header", first_row_is_header) \
-    .option("sep", delimiter) \
-    .load(fichier)
+    
     df_orders = df_orders.withColumnRenamed("product.id", "bike")
     df_orders = df_orders.withColumnRenamed("order.id", "order_id")
     df_orders = df_orders.withColumnRenamed("order.date", "order_date")
@@ -35,29 +26,10 @@ def extract(df_orders_csv, df_bikes_csv, df_bikeshops_csv):
     df_orders = df_orders.fillna(0, subset=["jour"])
 
     #bikes.csv
-    fichier = df_bikes_csv
-    infer_schema = "false"
-    first_row_is_header = "True"
-    delimiter = ";"
-
-    df_bikes = spark.read.format("csv") .option("inferSchema", infer_schema) \
-    .option("header", first_row_is_header) \
-    .option("sep", delimiter) \
-    .load(fichier)
     df_bikes = df_bikes.withColumnRenamed("bike.id", "bike")
 
     #bikeshop.csv
-    fichier = df_bikeshops_csv
-    infer_schema = "false"
-    first_row_is_header = "True"
-    delimiter = ";"
-
-    df_bikeshops = spark.read.format("csv") .option("inferSchema", infer_schema) \
-    .option("header", first_row_is_header) \
-    .option("sep", delimiter) \
-    .load(fichier)
     df_bikeshops = df_bikeshops.withColumnRenamed("bikeshop.id", "bikeshop")
-
 
     #join
     df_1 = df_orders.join(df_bikes, on="bike", how="inner")
