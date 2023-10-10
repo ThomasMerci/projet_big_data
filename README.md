@@ -24,13 +24,12 @@ Hadoop : https://github.com/ThomasMerci/docker-hadoop
 
 docker network create projet_big_data_network
 
-*[aller dans le dossier hadoop puis docker_hadoop_master]*
+*[aller dans docker_services]*
 docker-compose up
 
-*[aller dans le dossier techno]*
-docker-compose up
 
-*[dossier racine]*
+
+*[dossier racine projet_big_data]*
 docker-compose build
 
 docker-compose up
