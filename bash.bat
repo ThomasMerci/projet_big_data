@@ -1,4 +1,3 @@
-#!/bin/bash
 cd Docker_services
 docker-compose up -d
 
