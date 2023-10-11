@@ -70,6 +70,11 @@ def extract(df_orders, df_bikes, df_bikeshops):
     df = df.withColumn("quantity", col("quantity").cast(DoubleType()))
     df = df.withColumn("price", col("price").cast(DoubleType()))
 
+
+
+
+
+
     #data pour le ml
     df_ML = df.groupBy("order_date").agg(
         Funct.sum("quantity").alias("total_quantity"),
