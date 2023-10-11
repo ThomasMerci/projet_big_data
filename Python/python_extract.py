@@ -71,9 +71,31 @@ def extract(df_orders, df_bikes, df_bikeshops):
     df = df.withColumn("price", col("price").cast(DoubleType()))
 
 
+    #partie analyse
+    # Supprimer les lignes dupliquer
+    df = df.dropDuplicates()
 
+    # Boucle pour enlever les valeurs aberrantes de chaque colonne
+    for col_name in df.columns:
+        try:
+            # Tentez de convertir la colonne en DoubleType
+            numeric_col = df[col_name].cast(DoubleType())
 
+            # Si la conversion réussit sans erreur, la colonne est numérique
+            if numeric_col is not None:
+                # Calcul des statistiques pour la colonne
+                stats = df.select(avg(col_name), stddev(col_name)).first()
+                mean = stats[0]
+                std = stats[1]
 
+                if mean is not None and std is not None:
+                    # Calcul du seuil pour déterminer les valeurs aberrantes
+                    threshold = 3 * std + mean
+                    # Suppression des valeurs aberrantes pour la colonne
+                    df = df.filter(df[col_name] <= threshold)
+        except:
+            # Si la conversion génère une erreur, la colonne n'est pas numérique
+            pass
 
     #data pour le ml
     df_ML = df.groupBy("order_date").agg(
@@ -86,8 +108,7 @@ def extract(df_orders, df_bikes, df_bikeshops):
     min_date = df_ML.selectExpr("min(order_date)").first()[0]
     df_ML = df_ML.withColumn("nb_jour", datediff(df_ML["order_date"], lit(min_date)))
     df_ML = df_ML.fillna(0, subset=["jour"])
-
-    df.show
+    
     return df_ML, df
 
 
