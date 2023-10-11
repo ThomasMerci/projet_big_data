@@ -24,11 +24,11 @@ print(hadoop_address)
 def upload_hdfs(local, hdfs, client):
     try:
         if not os.path.exists(local):
-            print(f"Le fichier {local} n'existe pas localement. Téléchargement depuis HDFS...")
+            print(f"Le fichier {local} n'existe pas localement, téléchargement")
             fichier_hdfs = hdfs + local.split('/')[-1]
             client.upload(fichier_hdfs, local, overwrite=True)
         else:
-            print(f"Le fichier {local} existe localement. Utilisation du fichier local.")
+            print(f"Le fichier {local} existe localement")
 
     except Exception as e:
         print(f"Erreur lors du traitement de {local}: {e}")
@@ -46,7 +46,7 @@ for hdfs_csv in hdfs_csvs:
         client.download(hdfs_csv, local)
         print(f"Téléchargement de {local} depuis HDFS.")
     else:
-        print(f"Le fichier {local} existe localement. Utilisation du fichier local.")
+        print(f"Le fichier {local} existe localement")
 
     with client.read(hdfs_csv, encoding='utf-8') as hdfs_data:
         dfs[local] = pd.read_csv(hdfs_data)
@@ -69,8 +69,8 @@ spark = configure_spark_with_delta_pip(builder).getOrCreate()
 
 # table
 data = spark.range(0, 5)
-data.write.format("delta").mode("overwrite").save("/tmp/data_table")
-df = spark.read.format("delta").load("/tmp/data_table")
+data.write.format("delta").mode("overwrite").save("/projet/data_table")
+df = spark.read.format("delta").load("/projet/data_table")
 df.show()
 
 # csv
@@ -85,32 +85,32 @@ csv_data = spark.read.option("header", "true").option("delimiter", ";").schema(s
 csv_data = csv_data.na.drop()
 csv_data.show(10)
 
-
 # delta 
-csv_data.write.format("delta").mode("overwrite").save("/tmp/csv_table")
-df_csv = spark.read.format("delta").load("/tmp/csv_table")
+csv_data.write.format("delta").mode("overwrite").save("/projet/csv_table")
+df_csv = spark.read.format("delta").load("/projet/csv_table")
 df_csv.show(10)
 data_bikes.show(10)
 
 #enregistrement df_ml dans deltalake
-df_ml.write.format("delta").mode("overwrite").save("/tmp/df_ml")
-data_bikes.write.format("delta").mode("overwrite").save("/tmp/data_bikes")
-df_ml_delta = spark.read.format("delta").load("/tmp/df_ml")
-data_bikes_delta = spark.read.format("delta").load("/tmp/data_bikes")
+df_ml.write.format("delta").mode("overwrite").save("/projet/df_ml")
+data_bikes.write.format("delta").mode("overwrite").save("/projet/data_bikes")
+df_ml_delta = spark.read.format("delta").load("/projet/df_ml")
+data_bikes_delta = spark.read.format("delta").load("/projet/data_bikes")
 data_bikes_delta.show(10)
 df_ml.show(10)
 
 #lister les dossiers delta
 import os
-listes = os.listdir("/tmp/")
+listes = os.listdir("/projet/")
 for file in listes:
-    chemin = os.path.join("/tmp/", file)
+    chemin = os.path.join("/projet/", file)
     if os.path.isfile(chemin):
         print(f"Fichier : {file}")
     elif os.path.isdir(chemin):
         print(f"Dossier : {file}")
 
-
+#df_hdfs = spark.read.format("delta").load("hdfs://namenode:8020/projet/data_table")
+#df_hdfs.show()
 
 print('fin')
 
