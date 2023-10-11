@@ -1,3 +1,11 @@
+from pyspark.sql.functions import dayofmonth, dayofweek, to_date, datediff, lit, date_add, coalesce, col, StructType
+from pyspark.sql.types import DoubleType, FloatType, IntegerType
+from pyspark.sql import DataFrame, functions as Funct
+from pyspark.sql.functions import *
+from pyspark.sql.types import *
+import pyspark
+from pyspark.sql import SparkSession
+
 from pyspark.sql.functions import dayofmonth, dayofweek, to_date, datediff, lit, date_add, coalesce, col
 from pyspark.sql.types import DoubleType, FloatType, IntegerType
 from pyspark.sql import DataFrame, functions as Funct
@@ -5,7 +13,9 @@ from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml import Pipeline
 
-def rl_recette(df_ml):
+def rl_recette(df_ML, df):
+    spark = SparkSession.builder.appName("data").enableHiveSupport().getOrCreate()
+    """
     col_ML = ["order_date", "nb_jour", "quantity", "jour", "jour_semaine", "price"]
     df_ML = df_ml.select(col_ML)
 
@@ -18,7 +28,7 @@ def rl_recette(df_ml):
     min_date = df_ML.selectExpr("min(order_date)").first()[0]
     df_ML = df_ML.withColumn("nb_jour", datediff(df_ML["order_date"], lit(min_date)))
     df_ML = df_ML.fillna(0, subset=["jour"])
-
+    """
     #cast
     df_ML = df_ML.withColumn("total_price", col("total_price").cast(DoubleType()))
     df_ML = df_ML.withColumn("nb_jour", col("nb_jour").cast(DoubleType()))
@@ -38,7 +48,7 @@ def rl_recette(df_ml):
     df_pred = model.transform(df_pred)
     df_resultat = df_pred.select("nb_jour", "pred_total_price")
 
-    min_date = df_orders.selectExpr("max(order_date)").first()[0]
+    min_date = df.selectExpr("max(order_date)").first()[0]
     df_resultat = df_resultat.select("nb_jour", "pred_total_price")
     df_resultat = df_resultat.withColumn("nb_jour", col("nb_jour").cast(IntegerType())) 
     df_resultat = df_resultat.withColumn("order_date", date_add(lit(min_date), df_resultat["nb_jour"]))

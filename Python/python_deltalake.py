@@ -10,7 +10,7 @@ import pyarrow.hdfs as hdfs
 import pandas as pd
 from delta import DeltaTable
 import python_extract
-#import python_ml
+import python_ml
 #import data_analysis
 #import data_processing
 
@@ -91,13 +91,21 @@ df_csv = spark.read.format("delta").load("/projet/csv_table")
 df_csv.show(10)
 data_bikes.show(10)
 
-#enregistrement df_ml dans deltalake
+#enregistrement/lecture df_ml dans deltalake
 df_ml.write.format("delta").mode("overwrite").save("/projet/df_ml")
 data_bikes.write.format("delta").mode("overwrite").save("/projet/data_bikes")
+
 df_ml_delta = spark.read.format("delta").load("/projet/df_ml")
 data_bikes_delta = spark.read.format("delta").load("/projet/data_bikes")
-data_bikes_delta.show(10)
-df_ml.show(10)
+#data_bikes_delta.show(10)
+#df_ml_delta.show(10)
+
+#ml
+data_ml = python_ml.rl_recette(df_ml_delta, data_bikes_delta)
+data_ml.write.format("delta").mode("overwrite").save("/projet/data_ml")
+data_ml_delta = spark.read.format("delta").load("/projet/data_ml")
+data_ml_delta.show(10)
+
 
 #lister les dossiers delta
 import os
