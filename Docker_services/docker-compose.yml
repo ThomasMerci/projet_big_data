@@ -34,18 +34,18 @@ services:
     networks:
       - projet_big_data_network
 
-  #resourcemanager:
-  #  image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
-  #  container_name: resourcemanager
-  #  restart: always
-  #  environment:
-  #    SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
-  #  ports:
-  #    - 8088:8088
-  #  env_file:
-  #    - ./hadoop.env
-  #  networks:
-  #    - projet_big_data_network
+  resourcemanager:
+    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+    container_name: resourcemanager
+    restart: always
+    environment:
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
+    ports:
+      - 8088:8088
+    env_file:
+      - ./hadoop.env
+    networks:
+      - projet_big_data_network
 
   nodemanager1:
     image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
@@ -194,7 +194,7 @@ services:
     depends_on:
       - namenode
       - datanode
-    #  - resourcemanager
+      - resourcemanager
       - nodemanager1
     #  - historyserver
     #  - hive-server
