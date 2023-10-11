@@ -22,16 +22,19 @@ print(hadoop_address)
 
 #hdfs enregistrement
 def upload_hdfs(local, hdfs, client):
+    """
     try:
         if not os.path.exists(local):
             print(f"Le fichier {local} n'existe pas localement, téléchargement")
-            fichier_hdfs = hdfs + local.split('/')[-1]
-            client.upload(fichier_hdfs, local, overwrite=True)
+            """
+    fichier_hdfs = hdfs + local.split('/')[-1]
+    client.upload(fichier_hdfs, local, overwrite=True)
+    """
         else:
             print(f"Le fichier {local} existe localement")
 
     except Exception as e:
-        print(f"Erreur lors du traitement de {local}: {e}")
+        print(f"Erreur lors du traitement de {local}: {e}")"""
 
 upload_hdfs('./orders.csv', '/projet/', client)
 upload_hdfs('./bikes.csv', '/projet/', client)
@@ -119,7 +122,6 @@ for file in listes:
 #df_hdfs = spark.read.format("delta").load("hdfs://namenode:8020/projet/data_table")
 #df_hdfs.show()
 
-
 # Analyse
 print("Calcul des corrélations de Pearson pour chaque paire de colonne : \n")
 # Calculate Pearson correlation
@@ -131,7 +133,7 @@ for column in data_bikes.columns:
         if int(data_bikes.select(column).first()[0]):
             num_col += [column]
     except:
-        pass
+        pass 
 
 # Calculer la corrélation de pearson pour chaque pair de colonne
 correlations = {}
@@ -147,6 +149,5 @@ for cols, corr_val in correlations.items():
     print("La corrélation de Pearson entre {} et {} est : {}".format(cols[0], cols[1], corr_val))
 
 print('fin')
-
 for local_csv in dfs:
     os.remove(local_csv)

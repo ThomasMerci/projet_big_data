@@ -34,18 +34,18 @@ services:
     networks:
       - projet_big_data_network
 
-  resourcemanager:
-    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
-    container_name: resourcemanager
-    restart: always
-    environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
-    ports:
-      - 8088:8088
-    env_file:
-      - ./hadoop.env
-    networks:
-      - projet_big_data_network
+  #resourcemanager:
+  #  image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+  #  container_name: resourcemanager
+  #  restart: always
+  #  environment:
+  #    SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
+  #  ports:
+  #    - 8088:8088
+  #  env_file:
+  #    - ./hadoop.env
+  #  networks:
+  #    - projet_big_data_network
 
   nodemanager1:
     image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
@@ -58,73 +58,73 @@ services:
     networks:
       - projet_big_data_network
 
-  historyserver:
-    image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
-    container_name: historyserver
-    restart: always
-    environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
-    volumes:
-      - hadoop_historyserver:/hadoop/yarn/timeline
-    env_file:
-      - ./hadoop.env
-    networks:
-      - projet_big_data_network
+  #historyserver:
+  #  image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+  #  container_name: historyserver
+  #  restart: always
+  #  environment:
+  #    SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+  #  volumes:
+  #    - hadoop_historyserver:/hadoop/yarn/timeline
+  #  env_file:
+  #    - ./hadoop.env
+  #  networks:
+  #    - projet_big_data_network
 
-  hive-server:
-    image: bde2020/hive:2.3.2-postgresql-metastore
-    container_name: hive-server
-    depends_on:
-      - namenode
-      - datanode
-    env_file:
-      - ./hadoop-hive.env
-    environment:
-      HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
-      SERVICE_PRECONDITION: "hive-metastore:9083"
-    ports:
-      - 10000:10000
-      - 10002:10002
-    networks:
-      - projet_big_data_network
+  #hive-server:
+  #  image: bde2020/hive:2.3.2-postgresql-metastore
+  #  container_name: hive-server
+  #  depends_on:
+  #    - namenode
+  #    - datanode
+  #  env_file:
+  #    - ./hadoop-hive.env
+  #  environment:
+  #    HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
+  #    SERVICE_PRECONDITION: "hive-metastore:9083"
+  #  ports:
+  #    - 10000:10000
+  #    - 10002:10002
+  #  networks:
+  #    - projet_big_data_network
 
-  hive-metastore:
-    image: bde2020/hive:2.3.2-postgresql-metastore
-    container_name: hive-metastore
-    env_file:
-      - ./hadoop-hive.env
-    command: /opt/hive/bin/hive --service metastore
-    environment:
-      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 hive-metastore-postgresql:5432"
-    ports:
-      - 9083:9083
-    networks:
-      - projet_big_data_network
+  #hive-metastore:
+  #  image: bde2020/hive:2.3.2-postgresql-metastore
+  #  container_name: hive-metastore
+  #  env_file:
+  #    - ./hadoop-hive.env
+  #  command: /opt/hive/bin/hive --service metastore
+  #  environment:
+  #    SERVICE_PRECONDITION: "namenode:9870 datanode:9864 hive-metastore-postgresql:5432"
+  #  ports:
+  #    - 9083:9083
+  #  networks:
+  #    - projet_big_data_network
 
-  hive-metastore-postgresql:
-    image: bde2020/hive-metastore-postgresql:2.3.0
-    container_name: hive-metastore-postgresql
+  #hive-metastore-postgresql:
+  #  image: bde2020/hive-metastore-postgresql:2.3.0
+  #  container_name: hive-metastore-postgresql
 
-  hbase:
-    image: bde2020/hbase-standalone:1.0.0-hbase1.2.6
-    container_name: hbase
-    volumes:
-      - hbase_data:/hbase-data
-      - hbase_zookeeper_data:/zookeeper-data
-    ports:
-      - 16000:16000
-      - 16010:16010
-      - 16020:16020
-      - 16030:16030
-      - 2888:2888
-      - 3888:3888
-      - 2191:2191
-    environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
-    env_file:
-      - ./hbase-standalone.env
-    networks:
-      - projet_big_data_network
+  #hbase:
+  #  image: bde2020/hbase-standalone:1.0.0-hbase1.2.6
+  #  container_name: hbase
+  #  volumes:
+  #    - hbase_data:/hbase-data
+  #    - hbase_zookeeper_data:/zookeeper-data
+  #  ports:
+  #    - 16000:16000
+  #    - 16010:16010
+  #    - 16020:16020
+  #    - 16030:16030
+  #    - 2888:2888
+  #    - 3888:3888
+  #    - 2191:2191
+  #  environment:
+  #    SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+  #  env_file:
+  #    - ./hbase-standalone.env
+  #  networks:
+  #    - projet_big_data_network
 
   delta-lake:
     image: deltaio/delta-docker  
@@ -134,7 +134,7 @@ services:
       context: .  
       dockerfile: Dockerfile.delta_lake
     volumes:
-      #- delta-lake-data:/data  
+      - delta-lake-data:/data  
       - hadoop_namenode:/hadoop/dfs/data
     depends_on:
       - namenode  
@@ -193,33 +193,33 @@ services:
     depends_on:
       - namenode
       - datanode
-      - resourcemanager
+    #  - resourcemanager
       - nodemanager1
-      - historyserver
-      - hive-server
-      - hive-metastore
-      - hive-metastore-postgresql
-      - hbase
+    #  - historyserver
+    #  - hive-server
+    #  - hive-metastore
+    #  - hive-metastore-postgresql
+    #  - hbase
       - delta-lake
       - prometheus
       - grafana
       - spark
-  
-  zookeeper:
-    image: wurstmeister/zookeeper
-    container_name: zookeeper
-    ports:
-      - "2181:2181"
-  kafka:
-    image: wurstmeister/kafka
-    container_name: kafka
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-    networks:
-      - projet_big_data_network
+
+  #zookeeper:
+  #  image: wurstmeister/zookeeper
+  #  container_name: zookeeper
+  #  ports:
+  #    - "2181:2181"
+  #kafka:
+  #  image: wurstmeister/kafka
+  #  container_name: kafka
+  #  ports:
+  #    - "9092:9092"
+  #  environment:
+  #    KAFKA_ADVERTISED_HOST_NAME: localhost
+  #    KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  #  networks:
+  #    - projet_big_data_network
 
 volumes:
   hadoop_namenode:
