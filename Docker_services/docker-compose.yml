@@ -134,7 +134,8 @@ services:
       context: .  
       dockerfile: Dockerfile.delta_lake
     volumes:
-      - delta-lake-data:/data  
+      #- delta-lake-data:/data  
+      - hadoop_namenode:/hadoop/dfs/data
     depends_on:
       - namenode  
     ports :

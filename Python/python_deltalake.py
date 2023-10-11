@@ -22,16 +22,16 @@ print(hadoop_address)
 
 #hdfs enregistrement
 def upload_hdfs(local, hdfs, client):
-    #try:
-    #    if not os.path.exists(local):
-    #        print(f"Le fichier {local} n'existe pas localement, téléchargement")
-    fichier_hdfs = hdfs + local.split('/')[-1]
-    client.upload(fichier_hdfs, local, overwrite=True)
-    #    else:
-    #        print(f"Le fichier {local} existe localement")
+    try:
+        if not os.path.exists(local):
+            print(f"Le fichier {local} n'existe pas localement, téléchargement")
+            fichier_hdfs = hdfs + local.split('/')[-1]
+            client.upload(fichier_hdfs, local, overwrite=True)
+        else:
+            print(f"Le fichier {local} existe localement")
 
-    #except Exception as e:
-    #    print(f"Erreur lors du traitement de {local}: {e}")
+    except Exception as e:
+        print(f"Erreur lors du traitement de {local}: {e}")
 
 upload_hdfs('./orders.csv', '/projet/', client)
 upload_hdfs('./bikes.csv', '/projet/', client)
@@ -106,8 +106,6 @@ data_ml.write.format("delta").mode("overwrite").save("/projet/data_ml")
 data_ml_delta = spark.read.format("delta").load("/projet/data_ml")
 data_ml_delta.show(10)
 
-
-
 #lister les dossiers delta
 import os
 listes = os.listdir("/projet/")
@@ -120,6 +118,7 @@ for file in listes:
 
 #df_hdfs = spark.read.format("delta").load("hdfs://namenode:8020/projet/data_table")
 #df_hdfs.show()
+
 
 # Analyse
 print("Calcul des corrélations de Pearson pour chaque paire de colonne : \n")
