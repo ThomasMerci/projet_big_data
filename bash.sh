@@ -1,8 +1,9 @@
 #!/bin/bash
+docker network create projet_big_data_network
 cd Docker_services
 docker-compose up -d
 
-timeout /t 20 >nul
+timeout /t 30 >nul
 
 cd ..
 
