@@ -98,7 +98,7 @@ data_bikes.write.format("delta").mode("overwrite").save("/projet/data_bikes")
 df_ml_delta = spark.read.format("delta").load("/projet/df_ml")
 data_bikes_delta = spark.read.format("delta").load("/projet/data_bikes")
 #data_bikes_delta.show(10)
-#df_ml_delta.show(10)
+df_ml_delta.show(10)
 
 #ml
 data_ml = python_ml.rl_recette(df_ml_delta, data_bikes_delta)
