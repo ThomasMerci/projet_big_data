@@ -20,7 +20,7 @@ COPY Python/texte.csv ./texte.csv
 COPY data/bikes.csv ./bikes.csv
 COPY data/bikeshops.csv ./bikeshops.csv
 COPY data/orders.csv ./orders.csv
-COPY data/orders.csv ./customers.csv
+COPY data/customers.csv ./customers.csv
 
 COPY /Python/data_analysis.py ./data_analysis.py
 COPY /Python/data_processing.py ./data_processing.py
