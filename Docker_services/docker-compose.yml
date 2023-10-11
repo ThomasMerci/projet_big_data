@@ -183,7 +183,8 @@ services:
     container_name: nifi
     restart: always
     ports:
-      - 8080:8080
+      #- 8080:8080
+      - 8443:8080
     volumes:
       - nifi_data:/opt/nifi/nifi-current/conf
     env_file:
