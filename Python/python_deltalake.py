@@ -51,12 +51,11 @@ for hdfs_csv in hdfs_csvs:
     with client.read(hdfs_csv, encoding='utf-8') as hdfs_data:
         dfs[local] = pd.read_csv(hdfs_data)
 
-for key in dfs.keys():
-    print(f"fichier : {key}")
-
 df_ml, data_bikes = python_extract.extract('./orders.csv', './bikes.csv', './bikeshops.csv')
 df_ml.show(10)
 
+for key in dfs.keys():
+    print(f"fichier : {key}")
 #script python
 #DataAnalysis.analyze_and_clean_data()
 #data_processing.processing_and_save_data(df_orders_csv, df_bikes_csv, df_bikeshops_csv)
