@@ -1,4 +1,5 @@
 #!/bin/bash
+docker network create projet_big_data_network
 cd Docker_services
 docker-compose up -d
 
