@@ -6,10 +6,10 @@ from pyspark.sql.types import *
 import pyspark
 from pyspark.sql import SparkSession
 
-df_orders = "./orders.csv"
-df_bikes= "./bikes.csv"
-df_bikeshops= "./bikeshops.csv"
-df_customers= "./customers.csv"
+df_orders = "./data/orders.csv"
+df_bikes= "./data/bikes.csv"
+df_bikeshops= "./data/bikeshops.csv"
+df_customers= "./data/customers.csv"
 
 def extract(df_orders, df_bikes, df_bikeshops, df_customers):
 
@@ -111,5 +111,5 @@ def extract(df_orders, df_bikes, df_bikeshops, df_customers):
 
 df_ml, data_bikes = extract(df_orders, df_bikes, df_bikeshops, df_customers)
 
-data_bikes.write.format("csv").option("header", "true").option("delimiter", ";").save("./data_bikes.csv")
-df_ml.write.format("csv").option("header", "true").option("delimiter", ";").save("./df_ml.csv")
+data_bikes.write.format("csv").option("header", "true").option("delimiter", ";").save("./data/data_bikes.csv")
+df_ml.write.format("csv").option("header", "true").option("delimiter", ";").save("./data/df_ml.csv")
