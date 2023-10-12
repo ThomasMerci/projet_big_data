@@ -6,7 +6,7 @@ from pyspark.sql.types import *
 import pyspark
 from pyspark.sql import SparkSession
 
-def extract(df_orders, df_bikes, df_bikeshops):
+def extract(df_orders, df_bikes, df_bikeshops, df_customers):
 
     spark = SparkSession.builder.appName("data").enableHiveSupport().getOrCreate()
 
@@ -22,7 +22,7 @@ def extract(df_orders, df_bikes, df_bikeshops):
     df_orders = df_orders.withColumn("order_date", to_date(df_orders["order_date"], "M/d/yyyy"))
 
     bikesSchema = StructType([
-            StructField("bike_id", IntegerType(), True),
+            StructField("product_id", IntegerType(), True),
             StructField("model", StringType(), True),
             StructField("category1", StringType(), True),
             StructField("category2", StringType(), True),
@@ -31,23 +31,28 @@ def extract(df_orders, df_bikes, df_bikeshops):
     df_bikes = (spark.read.format("csv").option("inferSchema", "false").option("delimiter", ";").option("header", "true").schema(bikesSchema).load(df_bikes))
 
     bikeshopSchema = StructType([
-            StructField("bikeshop_id", IntegerType(), True),
+            StructField("customer_id", IntegerType(), True),
             StructField("bikeshop_name", StringType(), True),
             StructField("bikeshop_city", StringType(), True),
             StructField("bikeshop_state", StringType(), True),
             StructField("latitude", StringType(), True),
             StructField("longitude", StringType(), True)])
     df_bikeshops = (spark.read.format("csv").option("inferSchema", "false").option("delimiter", ";").option("header", "true").schema(bikeshopSchema).load(df_bikeshops))
-
-    #df_orders = spark.createDataFrame(df_orders)
-    #df_bikes = spark.createDataFrame(df_bikes)
-    #df_bikeshops = spark.createDataFrame(df_bikeshops)
-
-
-    df_orders = df_orders.withColumnRenamed("product_id", "bike")
-    df_orders = df_orders.withColumnRenamed("order_id", "order_id")
-    df_orders = df_orders.withColumnRenamed("order_date", "order_date")
-    df_orders = df_orders.withColumnRenamed("customer_id", "bikeshop")
+    
+    customerSchema = StructType([
+            StructField("customer_id", IntegerType(), True),
+            StructField("Prefix", StringType(), True),
+            StructField("FirstName", StringType(), True),
+            StructField("LastName", StringType(), True),
+            StructField("BirthDate", StringType(), True),
+            StructField("Gender", StringType(), True),
+            StructField("EmailAddress", StringType(), True),
+            StructField("AnnualIncome", StringType(), True),
+            StructField("TotalChildren", StringType(), True),
+            StructField("EducationLevel", StringType(), True),
+            StructField("Occupation", StringType(), True),
+            StructField("HomeOwner", StringType(), True)])
+    df_customers = (spark.read.format("csv").option("inferSchema", "false").option("delimiter", ",").option("header", "true").schema(customerSchema).load(df_customers))
 
     df_orders = df_orders.withColumn("order_date", to_date(df_orders["order_date"], "M/d/yyyy"))
     df_orders = df_orders.withColumn("jour", dayofmonth(df_orders["order_date"]))
@@ -57,44 +62,31 @@ def extract(df_orders, df_bikes, df_bikeshops):
     df_orders = df_orders.withColumn("nb_jour", datediff(df_orders["order_date"], lit(min_date)))
     df_orders = df_orders.fillna(0, subset=["jour"])
 
-    #bikes.csv
-    df_bikes = df_bikes.withColumnRenamed("bike_id", "bike")
-
-    #bikeshop.csv
-    df_bikeshops = df_bikeshops.withColumnRenamed("bikeshop_id", "bikeshop")
-
     #join
-    df_1 = df_orders.join(df_bikes, on="bike", how="inner")
-    df = df_1.join(df_bikeshops, on="bikeshop", how="inner")
+    df_1 = df_orders.join(df_bikes, on="product_id", how="inner")
+    df = df_1.join(df_bikeshops, on="customer_id", how="inner")
+    df = df_1.join(df_customers, on="customer_id", how="inner")
 
     df = df.withColumn("quantity", col("quantity").cast(DoubleType()))
     df = df.withColumn("price", col("price").cast(DoubleType()))
-
 
     #partie analyse
     # Supprimer les lignes dupliquer
     df = df.dropDuplicates()
 
-    # Boucle pour enlever les valeurs aberrantes de chaque colonne
+    # enlever les valeurs aberrantes
     for col_name in df.columns:
         try:
-            # Tentez de convertir la colonne en DoubleType
             numeric_col = df[col_name].cast(DoubleType())
-
-            # Si la conversion réussit sans erreur, la colonne est numérique
             if numeric_col is not None:
-                # Calcul des statistiques pour la colonne
                 stats = df.select(avg(col_name), stddev(col_name)).first()
                 mean = stats[0]
                 std = stats[1]
 
                 if mean is not None and std is not None:
-                    # Calcul du seuil pour déterminer les valeurs aberrantes
                     threshold = 3 * std + mean
-                    # Suppression des valeurs aberrantes pour la colonne
                     df = df.filter(df[col_name] <= threshold)
         except:
-            # Si la conversion génère une erreur, la colonne n'est pas numérique
             pass
 
     #data pour le ml

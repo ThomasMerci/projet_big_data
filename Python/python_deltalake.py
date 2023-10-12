@@ -44,7 +44,7 @@ def upload_hdfs(local, hdfs, client):
 
 #hdfs lecture
 dfs = {}
-hdfs_csvs = ['/projet/orders.csv', '/projet/bikes.csv', '/projet/bikeshops.csv']
+hdfs_csvs = ['/projet/orders.csv', '/projet/bikes.csv', '/projet/bikeshops.csv', '/projet/customers.csv']
 for hdfs_csv in hdfs_csvs:
     local = './' + hdfs_csv.split('/')[-1]
     if not os.path.exists(local):
@@ -56,7 +56,7 @@ for hdfs_csv in hdfs_csvs:
     with client.read(hdfs_csv, encoding='utf-8') as hdfs_data:
         dfs[local] = pd.read_csv(hdfs_data)
 
-df_ml, data_bikes = python_extract.extract('./orders.csv', './bikes.csv', './bikeshops.csv')
+df_ml, data_bikes = python_extract.extract('./orders.csv', './bikes.csv', './bikeshops.csv', './customers.csv')
 #fusionner puis enregistrer
 import os
 
