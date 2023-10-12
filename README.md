@@ -21,17 +21,24 @@ Apache Ranger : docker pull apache/ranger:2.4.0
 Hadoop : https://github.com/ThomasMerci/docker-hadoop
 
 
-# lancement 
+# lancement (dossier racine)
 
-docker network create projet_big_data_network
+>docker network create projet_big_data_network
 
-*[aller dans docker_services]*
-docker-compose up
-
+>bash.bat
 
 
-*[dossier racine projet_big_data]*
-docker-compose build
 
-docker-compose up
+#important
+
+Dans le nifi récupérer (clic droit) le templates du dossier racine (NIFIFLOW.xml)
+
+Lancer les processors (en bas à gauche)
+
+
+#lancement du projet avec spark
+
+>docker-compose build
+
+>docker-compose up
 
