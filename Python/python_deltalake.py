@@ -54,15 +54,8 @@ for hdfs_csv in hdfs_csvs:
     with client.read(hdfs_csv, encoding='utf-8') as hdfs_data:
         dfs[local] = pd.read_csv(hdfs_data)
 
-df_ml, data_bikes = python_extract.extract('./orders.csv', './bikes.csv', './bikeshops.csv')
-data_bikes.show(10)
-df_ml.show(10)
 
-for key in dfs.keys():
-    print(f"fichier : {key}")
-#script python
-#DataAnalysis.analyze_and_clean_data()
-#data_processing.processing_and_save_data(df_orders_csv, df_bikes_csv, df_bikeshops_csv)
+
 
 #spark
 builder = pyspark.sql.SparkSession.builder.appName("deltalake") \
@@ -73,6 +66,7 @@ spark = configure_spark_with_delta_pip(builder).getOrCreate()
 # table
 data = spark.range(0, 5)
 data.write.format("delta").mode("overwrite").save("/projet/data_table")
+"""
 df = spark.read.format("delta").load("/projet/data_table")
 df.show()
 
@@ -87,27 +81,31 @@ data_csv = "./texte.csv"
 csv_data = spark.read.option("header", "true").option("delimiter", ";").schema(schema).csv(data_csv)
 csv_data = csv_data.na.drop()
 csv_data.show(10)
-
+"""
 # delta
-csv_data.write.format("delta").mode("overwrite").save("/projet/csv_table")
-df_csv = spark.read.format("delta").load("/projet/csv_table")
-df_csv.show(10)
-data_bikes.show(10)
+csv_data.write.format("delta").mode("overwrite").save("/projet/table_projet")
+df_to_ml, data_bikes = python_extract.extract('./orders.csv', './bikes.csv', './bikeshops.csv')
 
-#enregistrement/lecture df_ml dans deltalake
-df_ml.write.format("delta").mode("overwrite").save("/projet/df_ml")
+df_to_ml.write.format("delta").mode("overwrite").save("/projet/df_to_ml")
 data_bikes.write.format("delta").mode("overwrite").save("/projet/data_bikes")
 
-df_ml_delta = spark.read.format("delta").load("/projet/df_ml")
+#hdfs
+upload_hdfs('./data_to_ml.csv', '/projet/', client)
+upload_hdfs('./data_bikes.csv', '/projet/', client)
+
+df_ml_delta = spark.read.format("delta").load("/projet/df_to_ml")
 data_bikes_delta = spark.read.format("delta").load("/projet/data_bikes")
-#data_bikes_delta.show(10)
 df_ml_delta.show(10)
 
-#ml
-data_ml = python_ml.rl_recette(df_ml_delta, data_bikes_delta)
-data_ml.write.format("delta").mode("overwrite").save("/projet/data_ml")
-data_ml_delta = spark.read.format("delta").load("/projet/data_ml")
-data_ml_delta.show(10)
+#delta ml
+data_ml_fin = python_ml.rl_recette(df_ml_delta, data_bikes_delta)
+data_ml_fin.write.format("delta").mode("overwrite").save("/projet/data_ml_fin")
+data_ml_fin_delta = spark.read.format("delta").load("/projet/data_ml_fin")
+
+#delta hdfs
+upload_hdfs('./data_ml_fin.csv', '/projet/', client)
+
+data_ml_fin_delta.show(10)
 
 #lister les dossiers delta
 import os
@@ -126,7 +124,7 @@ for file in listes:
 print("Calcul des corrélations de Pearson pour chaque paire de colonne : \n")
 # Calculate Pearson correlation
 num_col = []
-
+"""
 # Convert string columns to double when possible
 for column in data_bikes.columns:
     try:
@@ -147,7 +145,7 @@ for i in range(len(num_col)):
 # Afficher le résultat
 for cols, corr_val in correlations.items():
     print("La corrélation de Pearson entre {} et {} est : {}".format(cols[0], cols[1], corr_val))
-
+"""
 print('fin')
 for local_csv in dfs:
     os.remove(local_csv)
