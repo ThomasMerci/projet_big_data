@@ -69,10 +69,10 @@ def extract(df_orders, df_bikes, df_bikeshops, df_customers):
 
     #join
     df_1 = df_orders.join(df_bikes, on="product_id", how="inner")
-    df = df_1.join(df_bikeshops, on="customer_id", how="inner")
-    df = df_1.join(df_customers, on="customer_id", how="inner")
+    df_1 = df_1.join(df_bikeshops, on="customer_id", how="inner")
+    df_1 = df_1.join(df_customers, on="customer_id", how="inner")
 
-    df = df.withColumn("quantity", col("quantity").cast(DoubleType()))
+    df = df_1.withColumn("quantity", col("quantity").cast(DoubleType()))
     df = df.withColumn("price", col("price").cast(DoubleType()))
 
     #partie analyse
