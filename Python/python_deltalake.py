@@ -102,16 +102,14 @@ MEMORY_USAGE = Gauge('memory_usage_bytes', 'Utilisation de la mémoire')
 # Fonction pour traiter une demande et mesurer le temps
 def process_request():
     start_time = time.time()
-    # Ici, vous effectuez le traitement de votre demande
-    # Par exemple, vous pouvez simuler le traitement en attendant pendant quelques secondes
+    
     time.sleep(2)
     end_time = time.time()
     REQUEST_TIME.observe(end_time - start_time)
-    # Mesurer l'utilisation du CPU et de la mémoire
-    cpu_percent = psutil.cpu_percent(interval=None)  # Mesurer l'utilisation du CPU
-    memory_usage = psutil.virtual_memory().used  # Mesurer l'utilisation de la mémoire
 
-    # Mettre à jour les métriques de CPU et de mémoire
+    cpu_percent = psutil.cpu_percent(interval=None) 
+    memory_usage = psutil.virtual_memory().used 
+
     CPU_USAGE.set(cpu_percent)
     MEMORY_USAGE.set(memory_usage)
 
@@ -120,6 +118,5 @@ for local_csv in dfs:
     os.remove(local_csv)
 
 if __name__ == '__main__':
-    # Démarrez le serveur HTTP pour exposer les métriques
     start_http_server(8004)
     process_request()
