@@ -174,5 +174,6 @@ for local_csv in dfs:
 if __name__ == '__main__':
     # Démarrez le serveur HTTP pour exposer les métriques
     start_http_server(8004)
-    process_request()
-"""
+    while True:
+        # Traitement d'une demande
+        process_request()
