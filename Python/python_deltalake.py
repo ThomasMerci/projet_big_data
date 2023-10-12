@@ -58,13 +58,23 @@ for hdfs_csv in hdfs_csvs:
 
 df_ml, data_bikes = python_extract.extract('./orders.csv', './bikes.csv', './bikeshops.csv')
 #fusionner puis enregistrer
+import os
+
+# Obtenez le chemin absolu vers le volume monté dans le conteneur
+volume_projet = '/data/'
+if not os.path.exists(volume_projet):
+    os.makedirs(volume_projet)
+df_ml_coalesced.write.csv(os.path.join(volume_projet, 'df_ml.csv'), header=True, mode='overwrite', sep=';')
+data_bikes_coalesced.write.csv(os.path.join(volume_projet, 'data_bikes.csv'), header=True, mode='overwrite', sep=';')
+"""
 df_ml_coalesced = df_ml.coalesce(1)
 data_bikes_coalesced = data_bikes.coalesce(1)
 df_ml_coalesced.write.csv('/projet_data/df_ml.csv', header=True, mode='overwrite', sep=';')
 data_bikes_coalesced.write.csv('/projet_data/data_bikes.csv', header=True, mode='overwrite', sep=';')
+"""
 # hdfs
-upload_hdfs('/projet_data/df_ml.csv', '/projet/df_ml.csv', client)
-upload_hdfs('/projet_data/data_bikes.csv', '/projet/data_bikes.csv', client)
+upload_hdfs('/data/df_ml.csv', '/projet/df_ml.csv', client)
+upload_hdfs('/data/data_bikes.csv', '/projet/data_bikes.csv', client)
 print("fin hdfs")
 
 """
@@ -176,4 +186,4 @@ if __name__ == '__main__':
     while True:
         # Traitement d'une demande
         process_request()
-
+"""
