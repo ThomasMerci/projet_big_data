@@ -62,7 +62,6 @@ df_ml_coalesced = df_ml.coalesce(1)
 data_bikes_coalesced = data_bikes.coalesce(1)
 df_ml_coalesced.write.csv('/projet_data/df_ml.csv', header=True, mode='overwrite', sep=';')
 data_bikes_coalesced.write.csv('/projet_data/data_bikes.csv', header=True, mode='overwrite', sep=';')
-
 # hdfs
 upload_hdfs('/projet_data/df_ml.csv', '/projet/df_ml.csv', client)
 upload_hdfs('/projet_data/data_bikes.csv', '/projet/data_bikes.csv', client)
