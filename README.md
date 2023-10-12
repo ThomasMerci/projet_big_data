@@ -25,7 +25,7 @@ Hadoop : https://github.com/ThomasMerci/docker-hadoop
 
 >docker network create projet_big_data_network
 
->bash.bat
+>bash_techno.bat ou bash_techno.sh
 
 
 #important
@@ -37,7 +37,4 @@ Lancer les processors (en bas à gauche)
 
 #lancement du projet avec spark
 
->docker-compose build
-
->docker-compose up
-
+>bash.bat ou bash_projet.sh
