@@ -144,28 +144,38 @@ services:
       - projet_big_data_network
       
   prometheus:
-    image: bitnami/prometheus:2.47.0
+    image: bitnami/prometheus
     container_name: prometheus
     restart: always
     ports:
       - 9090:9090
     volumes:
       - prometheus_data:/bitnami/prometheus
-    env_file:
-      - ./prometheus.env
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - projet_big_data_network
+      
+  pushgateway:
+    image: bitnami/pushgateway
+    container_name: pushgateway
+    ports:
+      - "9091:9091"
     networks:
       - projet_big_data_network
   
   grafana:
-    image: grafana/grafana:9.4.14
+    image: grafana/grafana
     container_name: grafana
     restart: always
     ports:
       - 3000:3000
     volumes:
       - grafana_data:/var/lib/grafana
-    env_file:
-      - ./grafana.env
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      PROMETHEUS_URL: "http://prometheus:9090"
+    depends_on:
+      - prometheus
     networks:
       - projet_big_data_network
 

@@ -9,6 +9,9 @@ from pyspark.sql import SparkSession
 from delta import *
 import pandas as pd
 from delta import DeltaTable
+from prometheus_client import *
+import time
+import psutil
 import python_extract
 import python_ml
 #import data_analysis
@@ -148,6 +151,35 @@ for i in range(len(num_col)):
 for cols, corr_val in correlations.items():
     print("La corrélation de Pearson entre {} et {} est : {}".format(cols[0], cols[1], corr_val))
 
+# Métriques prometheus
+
+# Créer une métrique personnalisée
+REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
+CPU_USAGE = Gauge('cpu_usage_percent', 'Pourcentage utilisation CPU')
+MEMORY_USAGE = Gauge('memory_usage_bytes', 'Utilisation de la mémoire')
+
+
+# Fonction pour traiter une demande et mesurer le temps
+def process_request():
+    start_time = time.time()
+    # Ici, vous effectuez le traitement de votre demande
+    # Par exemple, vous pouvez simuler le traitement en attendant pendant quelques secondes
+    time.sleep(2)
+    end_time = time.time()
+    REQUEST_TIME.observe(end_time - start_time)
+    # Mesurer l'utilisation du CPU et de la mémoire
+    cpu_percent = psutil.cpu_percent(interval=None)  # Mesurer l'utilisation du CPU
+    memory_usage = psutil.virtual_memory().used  # Mesurer l'utilisation de la mémoire
+
+    # Mettre à jour les métriques de CPU et de mémoire
+    CPU_USAGE.set(cpu_percent)
+    MEMORY_USAGE.set(memory_usage)
+
 print('fin')
 for local_csv in dfs:
     os.remove(local_csv)
+
+if __name__ == '__main__':
+    # Démarrez le serveur HTTP pour exposer les métriques
+    start_http_server(8004)
+    process_request()

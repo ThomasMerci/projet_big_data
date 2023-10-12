@@ -3,3 +3,6 @@ pyspark
 delta-spark
 pyarrow
 pandas
+prometheus_client
+psutil
+flask
