@@ -64,13 +64,13 @@ import os
 volume_projet = '/data/'
 if not os.path.exists(volume_projet):
     os.makedirs(volume_projet)
-df_ml_coalesced.write.csv(os.path.join(volume_projet, 'df_ml.csv'), header=True, mode='overwrite', sep=';')
-data_bikes_coalesced.write.csv(os.path.join(volume_projet, 'data_bikes.csv'), header=True, mode='overwrite', sep=';')
+df_ml_coal = df_ml.coalesce(1)
+data_bikes_coal = data_bikes.coalesce(1)    
+df_ml_coal.write.csv(os.path.join(volume_projet, 'df_ml.csv'), header=True, mode='overwrite', sep=';')
+data_bikes_coal.write.csv(os.path.join(volume_projet, 'data_bikes.csv'), header=True, mode='overwrite', sep=';')
 """
-df_ml_coalesced = df_ml.coalesce(1)
-data_bikes_coalesced = data_bikes.coalesce(1)
-df_ml_coalesced.write.csv('/projet_data/df_ml.csv', header=True, mode='overwrite', sep=';')
-data_bikes_coalesced.write.csv('/projet_data/data_bikes.csv', header=True, mode='overwrite', sep=';')
+df_ml_coal.write.csv('/projet_data/df_ml.csv', header=True, mode='overwrite', sep=';')
+data_bikes_coal.write.csv('/projet_data/data_bikes.csv', header=True, mode='overwrite', sep=';')
 """
 # hdfs
 upload_hdfs('/data/df_ml.csv', '/projet/df_ml.csv', client)
