@@ -20,24 +20,23 @@ import python_ml
 #mise en place des fihciers dans hdfs
 hadoop_address = 'http://namenode:9870/' #namenode
 client = InsecureClient(hadoop_address, user='root')
+
 client.makedirs('/projet')
 print(hadoop_address)
 
 #hdfs enregistrement
 def upload_hdfs(local, hdfs, client):
-    """
     try:
         if not os.path.exists(local):
             print(f"Le fichier {local} n'existe pas localement, téléchargement")
-            """
-    fichier_hdfs = hdfs + local.split('/')[-1]
-    client.upload(fichier_hdfs, local, overwrite=True)
-    """
+            fichier_hdfs = hdfs + local.split('/')[-1]
+            client.upload(fichier_hdfs, local, overwrite=True)
+
         else:
             print(f"Le fichier {local} existe localement")
 
     except Exception as e:
-        print(f"Erreur lors du traitement de {local}: {e}")"""
+        print(f"Erreur lors du traitement de {local}: {e}")
 
 #upload_hdfs('./orders.csv', '/projet/', client)
 #upload_hdfs('./bikes.csv', '/projet/', client)
@@ -58,8 +57,23 @@ for hdfs_csv in hdfs_csvs:
         dfs[local] = pd.read_csv(hdfs_data)
 
 df_ml, data_bikes = python_extract.extract('./orders.csv', './bikes.csv', './bikeshops.csv')
-data_bikes.show(10)
-df_ml.show(10)
+#fusionner puis enregistrer
+df_ml_coalesced = df_ml.coalesce(1)
+data_bikes_coalesced = data_bikes.coalesce(1)
+df_ml_coalesced.write.csv('/projet_data/df_ml.csv', header=True, mode='overwrite', sep=';')
+data_bikes_coalesced.write.csv('/projet_data/data_bikes.csv', header=True, mode='overwrite', sep=';')
+
+# hdfs
+upload_hdfs('/projet_data/df_ml.csv', '/projet/df_ml.csv', client)
+upload_hdfs('/projet_data/data_bikes.csv', '/projet/data_bikes.csv', client)
+print("fin hdfs")
+
+"""
+#hdfs_path_df_ml = '/projet/df_ml'
+#hdfs_path_data_bikes = '/projet/data_bikes'
+#df_ml.write.csv(hdfs_path_df_ml, header=True, mode='overwrite', sep=';')
+#data_bikes.write.csv(hdfs_path_data_bikes, header=True, mode='overwrite', sep=';')
+
 
 for key in dfs.keys():
     print(f"fichier : {key}")
@@ -72,30 +86,8 @@ builder = pyspark.sql.SparkSession.builder.appName("deltalake") \
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
 spark = configure_spark_with_delta_pip(builder).getOrCreate()
-
-# table
 data = spark.range(0, 5)
 data.write.format("delta").mode("overwrite").save("/projet/data_table")
-df = spark.read.format("delta").load("/projet/data_table")
-df.show()
-
-# csv
-schema = StructType([StructField("id", IntegerType(), True),
-                     StructField("model", StringType(), True),
-                     StructField("category1", StringType(), True),
-                     StructField("category2", StringType(), True),
-                     StructField("frame", StringType(), True),
-                     StructField("price", DoubleType(), True) ])
-data_csv = "./texte.csv"
-csv_data = spark.read.option("header", "true").option("delimiter", ";").schema(schema).csv(data_csv)
-csv_data = csv_data.na.drop()
-csv_data.show(10)
-
-# delta
-csv_data.write.format("delta").mode("overwrite").save("/projet/csv_table")
-df_csv = spark.read.format("delta").load("/projet/csv_table")
-df_csv.show(10)
-data_bikes.show(10)
 
 #enregistrement/lecture df_ml dans deltalake
 df_ml.write.format("delta").mode("overwrite").save("/projet/df_ml")
@@ -183,3 +175,4 @@ if __name__ == '__main__':
     # Démarrez le serveur HTTP pour exposer les métriques
     start_http_server(8004)
     process_request()
+"""

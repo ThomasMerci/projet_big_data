@@ -12,7 +12,7 @@ services:
       - hadoop_namenode:/hadoop/dfs/name
     environment:
       CLUSTER_NAME: "training"
-      CORE_CONF_fs_defaultFS: "hdfs://namenode:9010"
+      CORE_CONF_fs_defaultFS: "hdfs://namenode:9000"
     env_file:
       - ./hadoop.env
     networks:
