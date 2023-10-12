@@ -5,8 +5,9 @@
     <name>NIFIFLOW</name>
     <snippet>
         <connections>
-            <id>27bac971-1954-3e3d-0000-000000000000</id>
+            <id>273cbaed-1319-3ba4-0000-000000000000</id>
             <parentGroupId>32d4a57f-3775-3a14-0000-000000000000</parentGroupId>
+            <versionedComponentId>273cbaed-1319-3ba4-8c38-fff099b5be48</versionedComponentId>
             <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
             <backPressureObjectThreshold>10000</backPressureObjectThreshold>
             <destination>
@@ -25,22 +26,134 @@
             <selectedRelationships>success</selectedRelationships>
             <source>
                 <groupId>32d4a57f-3775-3a14-0000-000000000000</groupId>
-                <id>1ac83d9a-db52-3480-0000-000000000000</id>
+                <id>cba045e1-eeb3-3578-0000-000000000000</id>
                 <type>PROCESSOR</type>
-                <versionedComponentId>1ac83d9a-db52-3480-a6d0-215b034e3703</versionedComponentId>
+                <versionedComponentId>cba045e1-eeb3-3578-b62b-10729b064f75</versionedComponentId>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>332f434d-909f-33af-0000-000000000000</id>
+            <parentGroupId>32d4a57f-3775-3a14-0000-000000000000</parentGroupId>
+            <versionedComponentId>332f434d-909f-33af-b6e5-85b1fca459c8</versionedComponentId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>32d4a57f-3775-3a14-0000-000000000000</groupId>
+                <id>ae49813c-3c5d-3eba-0000-000000000000</id>
+                <type>PROCESSOR</type>
+                <versionedComponentId>ae49813c-3c5d-3eba-bb3e-248cc7e00c1a</versionedComponentId>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>failure</selectedRelationships>
+            <source>
+                <groupId>32d4a57f-3775-3a14-0000-000000000000</groupId>
+                <id>ed8e5e1b-6a73-36d6-0000-000000000000</id>
+                <type>PROCESSOR</type>
+                <versionedComponentId>ed8e5e1b-6a73-36d6-9699-6e105182617b</versionedComponentId>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>3be7c25e-7dd3-34ad-0000-000000000000</id>
+            <parentGroupId>32d4a57f-3775-3a14-0000-000000000000</parentGroupId>
+            <versionedComponentId>3be7c25e-7dd3-34ad-b5dc-adf71df57968</versionedComponentId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>32d4a57f-3775-3a14-0000-000000000000</groupId>
+                <id>ed8e5e1b-6a73-36d6-0000-000000000000</id>
+                <type>PROCESSOR</type>
+                <versionedComponentId>ed8e5e1b-6a73-36d6-9699-6e105182617b</versionedComponentId>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>success</selectedRelationships>
+            <source>
+                <groupId>32d4a57f-3775-3a14-0000-000000000000</groupId>
+                <id>0b543993-f919-3a54-0000-000000000000</id>
+                <type>PROCESSOR</type>
+                <versionedComponentId>0b543993-f919-3a54-ab60-6c20f164eed6</versionedComponentId>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>53d470f0-c01a-30d8-0000-000000000000</id>
+            <parentGroupId>32d4a57f-3775-3a14-0000-000000000000</parentGroupId>
+            <versionedComponentId>53d470f0-c01a-30d8-9846-b3b975908b28</versionedComponentId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>32d4a57f-3775-3a14-0000-000000000000</groupId>
+                <id>ed8e5e1b-6a73-36d6-0000-000000000000</id>
+                <type>PROCESSOR</type>
+                <versionedComponentId>ed8e5e1b-6a73-36d6-9699-6e105182617b</versionedComponentId>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>success</selectedRelationships>
+            <source>
+                <groupId>32d4a57f-3775-3a14-0000-000000000000</groupId>
+                <id>278f232a-d182-3356-0000-000000000000</id>
+                <type>PROCESSOR</type>
+                <versionedComponentId>278f232a-d182-3356-8dcd-b5aece324d81</versionedComponentId>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>f264ba98-02e1-30c6-0000-000000000000</id>
+            <parentGroupId>32d4a57f-3775-3a14-0000-000000000000</parentGroupId>
+            <versionedComponentId>f264ba98-02e1-30c6-bf2c-065c3e56fb78</versionedComponentId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>1</backPressureObjectThreshold>
+            <destination>
+                <groupId>32d4a57f-3775-3a14-0000-000000000000</groupId>
+                <id>ed8e5e1b-6a73-36d6-0000-000000000000</id>
+                <type>PROCESSOR</type>
+                <versionedComponentId>ed8e5e1b-6a73-36d6-9699-6e105182617b</versionedComponentId>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>success</selectedRelationships>
+            <source>
+                <groupId>32d4a57f-3775-3a14-0000-000000000000</groupId>
+                <id>1078c732-afe7-3d01-0000-000000000000</id>
+                <type>PROCESSOR</type>
+                <versionedComponentId>1078c732-afe7-3d01-877d-6714ea0784f9</versionedComponentId>
             </source>
             <zIndex>0</zIndex>
         </connections>
         <processors>
-            <id>1ac83d9a-db52-3480-0000-000000000000</id>
+            <id>0b543993-f919-3a54-0000-000000000000</id>
             <parentGroupId>32d4a57f-3775-3a14-0000-000000000000</parentGroupId>
             <position>
-                <x>0.0</x>
-                <y>0.0</y>
+                <x>8.0</x>
+                <y>352.0</y>
             </position>
-            <versionedComponentId>1ac83d9a-db52-3480-a6d0-215b034e3703</versionedComponentId>
+            <versionedComponentId>0b543993-f919-3a54-ab60-6c20f164eed6</versionedComponentId>
             <bundle>
-                <artifact>nifi-hadoop-nar</artifact>
+                <artifact>nifi-standard-nar</artifact>
                 <group>org.apache.nifi</group>
                 <version>1.23.2</version>
             </bundle>
@@ -51,65 +164,27 @@
                 <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
                 <descriptors>
                     <entry>
-                        <key>Hadoop Configuration Resources</key>
+                        <key>Input Directory</key>
                         <value>
-                            <name>Hadoop Configuration Resources</name>
+                            <name>Input Directory</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>kerberos-credentials-service</key>
+                        <key>File Filter</key>
                         <value>
-                            <identifiesControllerService>org.apache.nifi.kerberos.KerberosCredentialsService</identifiesControllerService>
-                            <name>kerberos-credentials-service</name>
+                            <name>File Filter</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>kerberos-user-service</key>
+                        <key>Path Filter</key>
                         <value>
-                            <identifiesControllerService>org.apache.nifi.kerberos.KerberosUserService</identifiesControllerService>
-                            <name>kerberos-user-service</name>
+                            <name>Path Filter</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>Kerberos Principal</key>
+                        <key>Batch Size</key>
                         <value>
-                            <name>Kerberos Principal</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Kerberos Keytab</key>
-                        <value>
-                            <name>Kerberos Keytab</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Kerberos Password</key>
-                        <value>
-                            <name>Kerberos Password</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Kerberos Relogin Period</key>
-                        <value>
-                            <name>Kerberos Relogin Period</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Additional Classpath Resources</key>
-                        <value>
-                            <name>Additional Classpath Resources</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Directory</key>
-                        <value>
-                            <name>Directory</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Recurse Subdirectories</key>
-                        <value>
-                            <name>Recurse Subdirectories</name>
+                            <name>Batch Size</name>
                         </value>
                     </entry>
                     <entry>
@@ -119,21 +194,21 @@
                         </value>
                     </entry>
                     <entry>
-                        <key>File Filter Regex</key>
+                        <key>Recurse Subdirectories</key>
                         <value>
-                            <name>File Filter Regex</name>
+                            <name>Recurse Subdirectories</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>Filter Match Name Only</key>
+                        <key>Polling Interval</key>
                         <value>
-                            <name>Filter Match Name Only</name>
+                            <name>Polling Interval</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>Ignore Dotted Files</key>
+                        <key>Ignore Hidden Files</key>
                         <value>
-                            <name>Ignore Dotted Files</name>
+                            <name>Ignore Hidden Files</name>
                         </value>
                     </entry>
                     <entry>
@@ -149,27 +224,15 @@
                         </value>
                     </entry>
                     <entry>
-                        <key>Polling Interval</key>
+                        <key>Minimum File Size</key>
                         <value>
-                            <name>Polling Interval</name>
+                            <name>Minimum File Size</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>Batch Size</key>
+                        <key>Maximum File Size</key>
                         <value>
-                            <name>Batch Size</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>IO Buffer Size</key>
-                        <value>
-                            <name>IO Buffer Size</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Compression codec</key>
-                        <value>
-                            <name>Compression codec</name>
+                            <name>Maximum File Size</name>
                         </value>
                     </entry>
                 </descriptors>
@@ -179,52 +242,34 @@
                 <penaltyDuration>30 sec</penaltyDuration>
                 <properties>
                     <entry>
-                        <key>Hadoop Configuration Resources</key>
-                        <value>/opt/nifi/nifi-current/conf/core-site.xml</value>
+                        <key>Input Directory</key>
+                        <value>/opt/nifi/nifi-current/conf</value>
                     </entry>
                     <entry>
-                        <key>kerberos-credentials-service</key>
+                        <key>File Filter</key>
+                        <value>orders.csv</value>
                     </entry>
                     <entry>
-                        <key>kerberos-user-service</key>
+                        <key>Path Filter</key>
                     </entry>
                     <entry>
-                        <key>Kerberos Principal</key>
-                    </entry>
-                    <entry>
-                        <key>Kerberos Keytab</key>
-                    </entry>
-                    <entry>
-                        <key>Kerberos Password</key>
-                    </entry>
-                    <entry>
-                        <key>Kerberos Relogin Period</key>
-                        <value>4 hours</value>
-                    </entry>
-                    <entry>
-                        <key>Additional Classpath Resources</key>
-                    </entry>
-                    <entry>
-                        <key>Directory</key>
-                        <value>hdfs://namenode:9000/projet/</value>
-                    </entry>
-                    <entry>
-                        <key>Recurse Subdirectories</key>
-                        <value>true</value>
+                        <key>Batch Size</key>
+                        <value>10</value>
                     </entry>
                     <entry>
                         <key>Keep Source File</key>
                         <value>false</value>
                     </entry>
                     <entry>
-                        <key>File Filter Regex</key>
-                    </entry>
-                    <entry>
-                        <key>Filter Match Name Only</key>
+                        <key>Recurse Subdirectories</key>
                         <value>true</value>
                     </entry>
                     <entry>
-                        <key>Ignore Dotted Files</key>
+                        <key>Polling Interval</key>
+                        <value>10 sec</value>
+                    </entry>
+                    <entry>
+                        <key>Ignore Hidden Files</key>
                         <value>true</value>
                     </entry>
                     <entry>
@@ -235,19 +280,11 @@
                         <key>Maximum File Age</key>
                     </entry>
                     <entry>
-                        <key>Polling Interval</key>
-                        <value>0 sec</value>
+                        <key>Minimum File Size</key>
+                        <value>0 B</value>
                     </entry>
                     <entry>
-                        <key>Batch Size</key>
-                        <value>100</value>
-                    </entry>
-                    <entry>
-                        <key>IO Buffer Size</key>
-                    </entry>
-                    <entry>
-                        <key>Compression codec</key>
-                        <value>NONE</value>
+                        <key>Maximum File Size</key>
                     </entry>
                 </properties>
                 <retryCount>10</retryCount>
@@ -257,7 +294,7 @@
                 <yieldDuration>1 sec</yieldDuration>
             </config>
             <executionNodeRestricted>false</executionNodeRestricted>
-            <name>GetHDFS</name>
+            <name>Orders</name>
             <relationships>
                 <autoTerminate>false</autoTerminate>
                 <name>success</name>
@@ -265,14 +302,594 @@
             </relationships>
             <state>STOPPED</state>
             <style/>
-            <type>org.apache.nifi.processors.hadoop.GetHDFS</type>
+            <type>org.apache.nifi.processors.standard.GetFile</type>
+        </processors>
+        <processors>
+            <id>1078c732-afe7-3d01-0000-000000000000</id>
+            <parentGroupId>32d4a57f-3775-3a14-0000-000000000000</parentGroupId>
+            <position>
+                <x>32.0</x>
+                <y>0.0</y>
+            </position>
+            <versionedComponentId>1078c732-afe7-3d01-877d-6714ea0784f9</versionedComponentId>
+            <bundle>
+                <artifact>nifi-standard-nar</artifact>
+                <group>org.apache.nifi</group>
+                <version>1.23.2</version>
+            </bundle>
+            <config>
+                <backoffMechanism>PENALIZE_FLOWFILE</backoffMechanism>
+                <bulletinLevel>WARN</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>Input Directory</key>
+                        <value>
+                            <name>Input Directory</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>File Filter</key>
+                        <value>
+                            <name>File Filter</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Path Filter</key>
+                        <value>
+                            <name>Path Filter</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Batch Size</key>
+                        <value>
+                            <name>Batch Size</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Keep Source File</key>
+                        <value>
+                            <name>Keep Source File</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Recurse Subdirectories</key>
+                        <value>
+                            <name>Recurse Subdirectories</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Polling Interval</key>
+                        <value>
+                            <name>Polling Interval</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Ignore Hidden Files</key>
+                        <value>
+                            <name>Ignore Hidden Files</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Age</key>
+                        <value>
+                            <name>Minimum File Age</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Age</key>
+                        <value>
+                            <name>Maximum File Age</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Size</key>
+                        <value>
+                            <name>Minimum File Size</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Size</key>
+                        <value>
+                            <name>Maximum File Size</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <maxBackoffPeriod>10 mins</maxBackoffPeriod>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>Input Directory</key>
+                        <value>/opt/nifi/nifi-current/conf</value>
+                    </entry>
+                    <entry>
+                        <key>File Filter</key>
+                        <value>bikes.csv</value>
+                    </entry>
+                    <entry>
+                        <key>Path Filter</key>
+                    </entry>
+                    <entry>
+                        <key>Batch Size</key>
+                        <value>10</value>
+                    </entry>
+                    <entry>
+                        <key>Keep Source File</key>
+                        <value>true</value>
+                    </entry>
+                    <entry>
+                        <key>Recurse Subdirectories</key>
+                        <value>true</value>
+                    </entry>
+                    <entry>
+                        <key>Polling Interval</key>
+                        <value>10 sec</value>
+                    </entry>
+                    <entry>
+                        <key>Ignore Hidden Files</key>
+                        <value>true</value>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Age</key>
+                        <value>0 sec</value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Age</key>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Size</key>
+                        <value>0 B</value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Size</key>
+                    </entry>
+                </properties>
+                <retryCount>10</retryCount>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>0 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <executionNodeRestricted>false</executionNodeRestricted>
+            <name>Bikes</name>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>success</name>
+                <retry>false</retry>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>org.apache.nifi.processors.standard.GetFile</type>
+        </processors>
+        <processors>
+            <id>278f232a-d182-3356-0000-000000000000</id>
+            <parentGroupId>32d4a57f-3775-3a14-0000-000000000000</parentGroupId>
+            <position>
+                <x>0.0</x>
+                <y>528.0</y>
+            </position>
+            <versionedComponentId>278f232a-d182-3356-8dcd-b5aece324d81</versionedComponentId>
+            <bundle>
+                <artifact>nifi-standard-nar</artifact>
+                <group>org.apache.nifi</group>
+                <version>1.23.2</version>
+            </bundle>
+            <config>
+                <backoffMechanism>PENALIZE_FLOWFILE</backoffMechanism>
+                <bulletinLevel>WARN</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>Input Directory</key>
+                        <value>
+                            <name>Input Directory</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>File Filter</key>
+                        <value>
+                            <name>File Filter</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Path Filter</key>
+                        <value>
+                            <name>Path Filter</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Batch Size</key>
+                        <value>
+                            <name>Batch Size</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Keep Source File</key>
+                        <value>
+                            <name>Keep Source File</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Recurse Subdirectories</key>
+                        <value>
+                            <name>Recurse Subdirectories</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Polling Interval</key>
+                        <value>
+                            <name>Polling Interval</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Ignore Hidden Files</key>
+                        <value>
+                            <name>Ignore Hidden Files</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Age</key>
+                        <value>
+                            <name>Minimum File Age</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Age</key>
+                        <value>
+                            <name>Maximum File Age</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Size</key>
+                        <value>
+                            <name>Minimum File Size</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Size</key>
+                        <value>
+                            <name>Maximum File Size</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <maxBackoffPeriod>10 mins</maxBackoffPeriod>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>Input Directory</key>
+                        <value>/opt/nifi/nifi-current/conf</value>
+                    </entry>
+                    <entry>
+                        <key>File Filter</key>
+                        <value>customers.csv</value>
+                    </entry>
+                    <entry>
+                        <key>Path Filter</key>
+                    </entry>
+                    <entry>
+                        <key>Batch Size</key>
+                        <value>10</value>
+                    </entry>
+                    <entry>
+                        <key>Keep Source File</key>
+                        <value>true</value>
+                    </entry>
+                    <entry>
+                        <key>Recurse Subdirectories</key>
+                        <value>true</value>
+                    </entry>
+                    <entry>
+                        <key>Polling Interval</key>
+                        <value>10 sec</value>
+                    </entry>
+                    <entry>
+                        <key>Ignore Hidden Files</key>
+                        <value>true</value>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Age</key>
+                        <value>0 sec</value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Age</key>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Size</key>
+                        <value>0 B</value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Size</key>
+                    </entry>
+                </properties>
+                <retryCount>10</retryCount>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>0 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <executionNodeRestricted>false</executionNodeRestricted>
+            <name>Customers</name>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>success</name>
+                <retry>false</retry>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>org.apache.nifi.processors.standard.GetFile</type>
+        </processors>
+        <processors>
+            <id>ae49813c-3c5d-3eba-0000-000000000000</id>
+            <parentGroupId>32d4a57f-3775-3a14-0000-000000000000</parentGroupId>
+            <position>
+                <x>584.0</x>
+                <y>360.0</y>
+            </position>
+            <versionedComponentId>ae49813c-3c5d-3eba-bb3e-248cc7e00c1a</versionedComponentId>
+            <bundle>
+                <artifact>nifi-standard-nar</artifact>
+                <group>org.apache.nifi</group>
+                <version>1.23.2</version>
+            </bundle>
+            <config>
+                <backoffMechanism>PENALIZE_FLOWFILE</backoffMechanism>
+                <bulletinLevel>WARN</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>Line Split Count</key>
+                        <value>
+                            <name>Line Split Count</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Maximum Fragment Size</key>
+                        <value>
+                            <name>Maximum Fragment Size</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Header Line Count</key>
+                        <value>
+                            <name>Header Line Count</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Header Line Marker Characters</key>
+                        <value>
+                            <name>Header Line Marker Characters</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Remove Trailing Newlines</key>
+                        <value>
+                            <name>Remove Trailing Newlines</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <maxBackoffPeriod>10 mins</maxBackoffPeriod>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>Line Split Count</key>
+                    </entry>
+                    <entry>
+                        <key>Maximum Fragment Size</key>
+                    </entry>
+                    <entry>
+                        <key>Header Line Count</key>
+                        <value>0</value>
+                    </entry>
+                    <entry>
+                        <key>Header Line Marker Characters</key>
+                    </entry>
+                    <entry>
+                        <key>Remove Trailing Newlines</key>
+                        <value>true</value>
+                    </entry>
+                </properties>
+                <retryCount>10</retryCount>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>0 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <executionNodeRestricted>false</executionNodeRestricted>
+            <name>SplitText</name>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>failure</name>
+                <retry>false</retry>
+            </relationships>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>original</name>
+                <retry>false</retry>
+            </relationships>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>splits</name>
+                <retry>false</retry>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>org.apache.nifi.processors.standard.SplitText</type>
+        </processors>
+        <processors>
+            <id>cba045e1-eeb3-3578-0000-000000000000</id>
+            <parentGroupId>32d4a57f-3775-3a14-0000-000000000000</parentGroupId>
+            <position>
+                <x>16.0</x>
+                <y>176.0</y>
+            </position>
+            <versionedComponentId>cba045e1-eeb3-3578-b62b-10729b064f75</versionedComponentId>
+            <bundle>
+                <artifact>nifi-standard-nar</artifact>
+                <group>org.apache.nifi</group>
+                <version>1.23.2</version>
+            </bundle>
+            <config>
+                <backoffMechanism>PENALIZE_FLOWFILE</backoffMechanism>
+                <bulletinLevel>WARN</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>Input Directory</key>
+                        <value>
+                            <name>Input Directory</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>File Filter</key>
+                        <value>
+                            <name>File Filter</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Path Filter</key>
+                        <value>
+                            <name>Path Filter</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Batch Size</key>
+                        <value>
+                            <name>Batch Size</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Keep Source File</key>
+                        <value>
+                            <name>Keep Source File</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Recurse Subdirectories</key>
+                        <value>
+                            <name>Recurse Subdirectories</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Polling Interval</key>
+                        <value>
+                            <name>Polling Interval</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Ignore Hidden Files</key>
+                        <value>
+                            <name>Ignore Hidden Files</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Age</key>
+                        <value>
+                            <name>Minimum File Age</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Age</key>
+                        <value>
+                            <name>Maximum File Age</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Size</key>
+                        <value>
+                            <name>Minimum File Size</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Size</key>
+                        <value>
+                            <name>Maximum File Size</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <maxBackoffPeriod>10 mins</maxBackoffPeriod>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>Input Directory</key>
+                        <value>/opt/nifi/nifi-current/conf</value>
+                    </entry>
+                    <entry>
+                        <key>File Filter</key>
+                        <value>bikeshops.csv</value>
+                    </entry>
+                    <entry>
+                        <key>Path Filter</key>
+                    </entry>
+                    <entry>
+                        <key>Batch Size</key>
+                        <value>10</value>
+                    </entry>
+                    <entry>
+                        <key>Keep Source File</key>
+                        <value>true</value>
+                    </entry>
+                    <entry>
+                        <key>Recurse Subdirectories</key>
+                        <value>true</value>
+                    </entry>
+                    <entry>
+                        <key>Polling Interval</key>
+                        <value>10 sec</value>
+                    </entry>
+                    <entry>
+                        <key>Ignore Hidden Files</key>
+                        <value>true</value>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Age</key>
+                        <value>0 sec</value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Age</key>
+                    </entry>
+                    <entry>
+                        <key>Minimum File Size</key>
+                        <value>0 B</value>
+                    </entry>
+                    <entry>
+                        <key>Maximum File Size</key>
+                    </entry>
+                </properties>
+                <retryCount>10</retryCount>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>0 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <executionNodeRestricted>false</executionNodeRestricted>
+            <name>Bikeshops</name>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>success</name>
+                <retry>false</retry>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>org.apache.nifi.processors.standard.GetFile</type>
         </processors>
         <processors>
             <id>ed8e5e1b-6a73-36d6-0000-000000000000</id>
             <parentGroupId>32d4a57f-3775-3a14-0000-000000000000</parentGroupId>
             <position>
-                <x>464.0</x>
-                <y>0.0</y>
+                <x>512.0</x>
+                <y>136.0</y>
             </position>
             <versionedComponentId>ed8e5e1b-6a73-36d6-9699-6e105182617b</versionedComponentId>
             <bundle>
@@ -410,6 +1027,7 @@
                 <properties>
                     <entry>
                         <key>Hadoop Configuration Resources</key>
+                        <value>/opt/nifi/nifi-current/conf/core-site.xml</value>
                     </entry>
                     <entry>
                         <key>kerberos-credentials-service</key>
@@ -435,6 +1053,7 @@
                     </entry>
                     <entry>
                         <key>Directory</key>
+                        <value>hdfs://namenode:9000/projet/</value>
                     </entry>
                     <entry>
                         <key>Conflict Resolution Strategy</key>
@@ -480,7 +1099,7 @@
             <executionNodeRestricted>false</executionNodeRestricted>
             <name>PutHDFS</name>
             <relationships>
-                <autoTerminate>true</autoTerminate>
+                <autoTerminate>false</autoTerminate>
                 <name>failure</name>
                 <retry>false</retry>
             </relationships>
@@ -494,5 +1113,5 @@
             <type>org.apache.nifi.processors.hadoop.PutHDFS</type>
         </processors>
     </snippet>
-    <timestamp>10/11/2023 11:15:49 UTC</timestamp>
+    <timestamp>10/11/2023 22:55:25 UTC</timestamp>
 </template>
