@@ -28,7 +28,6 @@ Hadoop : https://github.com/ThomasMerci/docker-hadoop
 >bash.bat
 
 
-
 #important
 
 Dans le nifi récupérer (clic droit) le templates du dossier racine (NIFIFLOW.xml)
