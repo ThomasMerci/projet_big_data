@@ -22,8 +22,6 @@ COPY data/bikeshops.csv ./bikeshops.csv
 COPY data/orders.csv ./orders.csv
 COPY data/customers.csv ./customers.csv
 
-COPY /Python/data_analysis.py ./data_analysis.py
-COPY /Python/data_processing.py ./data_processing.py
 COPY /Python/python_extract.py ./python_extract.py
 COPY /Python/python_ml.py ./python_ml.py
 COPY /Python/python_deltalake.py ./python_deltalake.py
