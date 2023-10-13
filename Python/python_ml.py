@@ -9,8 +9,14 @@ from pyspark.sql import DataFrame, functions as Funct
 from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml import Pipeline
+import pyspark
+from pyspark.sql import SparkSession
 
 def rl_recette(df):
+
+    spark = SparkSession.builder.appName("data").enableHiveSupport().getOrCreate()
+
+
     df_ML = df.groupBy("order_date").agg(
         Funct.sum("quantity").alias("total_quantity"),
         Funct.sum("price").alias("total_price"))
