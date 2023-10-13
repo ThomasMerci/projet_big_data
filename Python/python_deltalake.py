@@ -56,28 +56,19 @@ for hdfs_csv in hdfs_csvs:
     with client.read(hdfs_csv, encoding='utf-8') as hdfs_data:
         dfs[local] = pd.read_csv(hdfs_data)
 
-df_ml, data_bikes = python_extract.extract('./orders.csv', './bikes.csv', './bikeshops.csv', './customers.csv')
-#fusionner puis enregistrer
-import os
+data_bikes = python_extract.extract('./orders.csv', './bikes.csv', './bikeshops.csv', './customers.csv')
 
 # Obtenez le chemin absolu vers le volume monté dans le conteneur
 volume_projet = '/data/'
 if not os.path.exists(volume_projet):
     os.makedirs(volume_projet)
-df_ml_coal = df_ml.coalesce(1)
 data_bikes_coal = data_bikes.coalesce(1)    
-df_ml_coal.write.csv(os.path.join(volume_projet, 'df_ml.csv'), header=True, mode='overwrite', sep=';')
 data_bikes_coal.write.csv(os.path.join(volume_projet, 'data_bikes.csv'), header=True, mode='overwrite', sep=';')
-"""
-df_ml_coal.write.csv('/projet_data/df_ml.csv', header=True, mode='overwrite', sep=';')
-data_bikes_coal.write.csv('/projet_data/data_bikes.csv', header=True, mode='overwrite', sep=';')
-"""
+
 # hdfs
-upload_hdfs('/data/df_ml.csv', '/projet/df_ml.csv', client)
 upload_hdfs('/data/data_bikes.csv', '/projet/data_bikes.csv', client)
 print("fin hdfs")
 
-"""
 #hdfs_path_df_ml = '/projet/df_ml'
 #hdfs_path_data_bikes = '/projet/data_bikes'
 #df_ml.write.csv(hdfs_path_df_ml, header=True, mode='overwrite', sep=';')
@@ -94,21 +85,17 @@ for key in dfs.keys():
 builder = pyspark.sql.SparkSession.builder.appName("deltalake") \
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+
 spark = configure_spark_with_delta_pip(builder).getOrCreate()
 data = spark.range(0, 5)
 data.write.format("delta").mode("overwrite").save("/projet/data_table")
 
 #enregistrement/lecture df_ml dans deltalake
-df_ml.write.format("delta").mode("overwrite").save("/projet/df_ml")
 data_bikes.write.format("delta").mode("overwrite").save("/projet/data_bikes")
-
-df_ml_delta = spark.read.format("delta").load("/projet/df_ml")
 data_bikes_delta = spark.read.format("delta").load("/projet/data_bikes")
-#data_bikes_delta.show(10)
-df_ml_delta.show(10)
 
 #ml
-data_ml = python_ml.rl_recette(df_ml_delta, data_bikes_delta)
+data_ml = python_ml.rl_recette(data_bikes)
 data_ml.write.format("delta").mode("overwrite").save("/projet/data_ml")
 data_ml_delta = spark.read.format("delta").load("/projet/data_ml")
 data_ml_delta.show(10)
@@ -186,4 +173,3 @@ if __name__ == '__main__':
     while True:
         # Traitement d'une demande
         process_request()
-"""

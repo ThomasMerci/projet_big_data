@@ -45,6 +45,7 @@ def extract(df_orders, df_bikes, df_bikeshops, df_customers):
             StructField("FirstName", StringType(), True),
             StructField("LastName", StringType(), True),
             StructField("BirthDate", StringType(), True),
+            StructField("MaritalStatus", StringType(), True),
             StructField("Gender", StringType(), True),
             StructField("EmailAddress", StringType(), True),
             StructField("AnnualIncome", StringType(), True),
@@ -69,7 +70,7 @@ def extract(df_orders, df_bikes, df_bikeshops, df_customers):
 
     df = df_1.withColumn("quantity", col("quantity").cast(DoubleType()))
     df = df.withColumn("price", col("price").cast(DoubleType()))
-    
+
     #partie analyse
     # Supprimer les lignes dupliquer
     df = df.dropDuplicates()
@@ -88,20 +89,5 @@ def extract(df_orders, df_bikes, df_bikeshops, df_customers):
                     df = df.filter(df[col_name] <= threshold)
         except:
             pass
-
-    #data pour le ml
-    df_ML = df.groupBy("order_date").agg(
-        Funct.sum("quantity").alias("total_quantity"),
-        Funct.sum("price").alias("total_price"))
-
-    df_ML = df_ML.withColumn("order_date", to_date(df_ML["order_date"], "M/d/yyyy"))
-    df_ML = df_ML.withColumn("jour", dayofmonth(df_ML["order_date"]))
-    df_ML = df_ML.withColumn("jour_semaine", dayofweek(df_ML["order_date"]))
-    min_date = df_ML.selectExpr("min(order_date)").first()[0]
-    df_ML = df_ML.withColumn("nb_jour", datediff(df_ML["order_date"], lit(min_date)))
-    df_ML = df_ML.fillna(0, subset=["jour"])
     
-    return df_ML, df
-
-
-
+    return df
