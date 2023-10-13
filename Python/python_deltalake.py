@@ -39,9 +39,10 @@ def upload_hdfs(local, hdfs, client):
     except Exception as e:
         print(f"Erreur lors du traitement de {local}: {e}")
 
-#upload_hdfs('./orders.csv', '/projet/', client)
-#upload_hdfs('./bikes.csv', '/projet/', client)
-#upload_hdfs('./bikeshops.csv', '/projet/', client)
+upload_hdfs('./orders.csv', '/projet/', client)
+upload_hdfs('./bikes.csv', '/projet/', client)
+upload_hdfs('./bikeshops.csv', '/projet/', client)
+upload_hdfs('./customers.csv', '/customers/', client)
 
 #hdfs lecture
 dfs = {}
