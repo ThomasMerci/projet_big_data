@@ -15,8 +15,6 @@ import psutil
 import python_extract
 import python_ml
 
-#import data_analysis
-#import data_processing
 
 #mise en place des fihciers dans hdfs
 hadoop_address = 'http://namenode:9870/' #namenode
@@ -71,17 +69,8 @@ data_bikes_coal.write.csv(os.path.join(volume_projet, 'data_bikes.csv'), header=
 upload_hdfs('/data/data_bikes.csv', '/projet/data_bikes.csv', client)
 print("fin hdfs")
 
-#hdfs_path_df_ml = '/projet/df_ml'
-#hdfs_path_data_bikes = '/projet/data_bikes'
-#df_ml.write.csv(hdfs_path_df_ml, header=True, mode='overwrite', sep=';')
-#data_bikes.write.csv(hdfs_path_data_bikes, header=True, mode='overwrite', sep=';')
-
-
 for key in dfs.keys():
     print(f"fichier : {key}")
-#script python
-#DataAnalysis.analyze_and_clean_data()
-#data_processing.processing_and_save_data(df_orders_csv, df_bikes_csv, df_bikeshops_csv)
 
 #spark
 builder = pyspark.sql.SparkSession.builder.appName("deltalake") \
@@ -114,9 +103,6 @@ for file in listes:
         print(f"Fichier : {file}")
     elif os.path.isdir(chemin):
         print(f"Dossier : {file}")
-
-#df_hdfs = spark.read.format("delta").load("hdfs://namenode:8020/projet/data_table")
-#df_hdfs.show()
 
 # Analyse
 print("Calcul des corrélations de Pearson pour chaque paire de colonne : \n")
@@ -151,7 +137,6 @@ REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing requ
 CPU_USAGE = Gauge('cpu_usage_percent', 'Pourcentage utilisation CPU')
 MEMORY_USAGE = Gauge('memory_usage_bytes', 'Utilisation de la mémoire')
 
-
 # Fonction pour traiter une demande et mesurer le temps
 def process_request():
     start_time = time.time()
@@ -160,9 +145,8 @@ def process_request():
     time.sleep(2)
     end_time = time.time()
     REQUEST_TIME.observe(end_time - start_time)
-    # Mesurer l'utilisation du CPU et de la mémoire
-    cpu_percent = psutil.cpu_percent(interval=None)  # Mesurer l'utilisation du CPU
-    memory_usage = psutil.virtual_memory().used  # Mesurer l'utilisation de la mémoire
+    cpu_percent = psutil.cpu_percent(interval=None) 
+    memory_usage = psutil.virtual_memory().used  
 
     # Mettre à jour les métriques de CPU et de mémoire
     CPU_USAGE.set(cpu_percent)
@@ -173,8 +157,6 @@ for local_csv in dfs:
     os.remove(local_csv)
 
 if __name__ == '__main__':
-    # Démarrez le serveur HTTP pour exposer les métriques
     start_http_server(8004)
     while True:
-        # Traitement d'une demande
         process_request()
