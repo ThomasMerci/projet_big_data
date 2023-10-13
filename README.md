@@ -38,5 +38,7 @@ Lancer les processors (en bas à gauche)
 >grafana -> config -> data source -> prometheus -> URL : http://prometheus:9090/ <br>
 >Faire explore pour explorer les metriques <br>
 
+Projet réalisé par Gaëtan ALLAH ASRA BADJINAN, Thomas MERCIER et Gabriello ZAFIFOMENDRAHA
+
 
 
