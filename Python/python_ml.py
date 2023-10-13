@@ -4,7 +4,7 @@ from pyspark.ml import Pipeline
 from pyspark.sql.functions import col, lit, date_add, to_date, dayofmonth, dayofweek, datediff
 from pyspark.sql.types import DoubleType, IntegerType
 
-def predict_future(df):
+def rl_recette(df):
     df_ML = df.groupBy("order_date").agg(
         Funct.sum("quantity").alias("total_quantity"),
         Funct.sum("price").alias("total_price"))
