@@ -1,6 +1,6 @@
 # projet_big_data
 
-![Alt text](diagr.png)
+![Alt text](graphe.png)
 
 
 ![Alt text](image.png)
