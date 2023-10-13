@@ -100,6 +100,9 @@ data_bikes_delta = spark.read.format("delta").load("/projet/data_bikes")
 data_ml = python_ml.rl_recette(data_bikes)
 data_ml.write.format("delta").mode("overwrite").save("/projet/data_ml")
 data_ml_delta = spark.read.format("delta").load("/projet/data_ml")
+data_ml_coal = data_ml.coalesce(1)    
+data_ml_coal.write.csv(os.path.join(volume_projet, 'data_bikes.csv'), header=True, mode='overwrite', sep=';')
+upload_hdfs('/data/data_ml.csv', '/projet/data_ml.csv', client)
 data_ml_delta.show(10)
 
 #lister les dossiers delta
