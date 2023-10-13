@@ -3,6 +3,12 @@ from pyspark.ml.regression import LinearRegression
 from pyspark.ml import Pipeline
 from pyspark.sql.functions import col, lit, date_add, to_date, dayofmonth, dayofweek, datediff
 from pyspark.sql.types import DoubleType, IntegerType
+from pyspark.sql.functions import dayofmonth, dayofweek, to_date, datediff, lit, date_add, coalesce, col
+from pyspark.sql.types import DoubleType, FloatType, IntegerType
+from pyspark.sql import DataFrame, functions as Funct
+from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.regression import LinearRegression
+from pyspark.ml import Pipeline
 
 def rl_recette(df):
     df_ML = df.groupBy("order_date").agg(
