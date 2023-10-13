@@ -25,7 +25,3 @@ Lancer les processors (en bas à gauche)
 
 >bash_projet.bat ou bash_projet.sh
 
-
-#Distribuer la donnée pour le data analyst
-
->bash_power.bat ou bash_power.sh
