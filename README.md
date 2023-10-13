@@ -27,16 +27,16 @@ Lancer les processors (en bas à gauche)
 
 # prometheus et Grafana 
 
->Prometheus : http://localhost:9090/
->Les jobs actifs sont dans targets
->ils sont aussi accessible via ces adresses :
->adresse_ip_du_container_prometheus:9090/metrics
->adresse_ip_du_container_pushgateway:9091/metrics
->adresse_ip_du_container_projet_big_data_python:8004/metrics
->Grafana : http://localhost:3000/
->Il faut peut-être mettre en place un data source prometheus :
->grafana -> config -> data source -> prometheus -> URL : http://prometheus:9090/
->Faire explore pour explorer les metriques 
+>Prometheus : http://localhost:9090/ <br>
+>Les jobs actifs sont dans targets <br>
+>ils sont aussi accessible via ces adresses : <br>
+>adresse_ip_du_container_prometheus:9090/metrics <br>
+>adresse_ip_du_container_pushgateway:9091/metrics <br>
+>adresse_ip_du_container_projet_big_data_python:8004/metrics <br>
+>Grafana : http://localhost:3000/ <br>
+>Il faut peut-être mettre en place un data source prometheus : <br>
+>grafana -> config -> data source -> prometheus -> URL : http://prometheus:9090/ <br>
+>Faire explore pour explorer les metriques <br>
 
 
 
