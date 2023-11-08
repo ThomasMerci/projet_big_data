@@ -3,7 +3,6 @@
 ![Alt text](graphe.png)
 
 
-![Alt text](image.png)
 
 
 
